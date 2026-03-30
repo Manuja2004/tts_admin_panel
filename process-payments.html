@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Process Payments | TTS Admin Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Process Referral Payouts">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		.summary-card {
+			background: #fff;
+
+			padding: 1.5rem;
+			box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+			margin-bottom: 1.5rem;
+			border: 1px solid #e7e9ed;
+		}
+
+		.summary-label {
+			color: #6c757d;
+			font-size: 0.85rem;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+		}
+
+		.summary-value {
+			font-size: 1.5rem;
+			font-weight: 800;
+			color: #2d3748;
+		}
+
+		.earnings-table-container {
+			background: #fff;
+			border: 1px solid #e7e9ed;
+			overflow: hidden;
+			margin-bottom: 2rem;
+		}
+
+		.form-section {
+			background: #fff;
+
+			padding: 1.5rem;
+			border: 1px solid #e7e9ed;
+			height: 100%;
+		}
+
+		.payment-summary {
+			background: #f8f9fa;
+			padding: 1.5rem;
+			border: 2px solid #e7e9ed;
+		}
+
+		.confirm-btn {
+			width: 100%;
+			padding: 0.75rem;
+			font-weight: 700;
+			transition: all 0.3s ease;
+		}
+
+		.confirm-btn:hover {
+			box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+		}
+
+		.user-select-panel {
+			background: #fff;
+
+			padding: 1.5rem;
+			border: 1px solid #e7e9ed;
+			margin-bottom: 1.5rem;
+		}
+
+		.badge-method {
+			font-size: 0.75rem;
+			padding: 0.25em 0.6em;
+			font-weight: 600;
+		}
+
+		.badge-upi {
+			background: #e3f2fd;
+			color: #0d47a1;
+		}
+
+		.badge-bank {
+			background: #f3e5f5;
+			color: #4a148c;
+		}
+
+		#selectedAmountDisplay {
+			font-size: 1.25rem;
+			color: #198754;
+			font-weight: 800;
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div>
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb mb-1">
+								<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+								<li class="breadcrumb-item active">Process Payments</li>
+							</ol>
+						</nav>
+						<h1 class="app-page-title mb-1"><i
+								class="fa-solid fa-money-bill-transfer me-2 text-primary"></i>Process Payments</h1>
+						<div class="text-muted">Review and settle referral commissions</div>
+					</div>
+				</div>
+
+				<!-- User Selection Panel -->
+				<div class="user-select-panel shadow-sm">
+					<div class="row g-3 align-items-end">
+						<div class="col-12 col-md-4">
+							<label class="form-label fw-bold">Select Referral Partner</label>
+							<select class="form-select select2-vendor" id="userSelect" onchange="loadUserEarnings()">
+								<option value="">Choose User...</option>
+								<option value="Kunal Patil">Kunal Patil</option>
+								<option value="Nikita Patil">Nikita Patil</option>
+								<option value="Sagar Patil">Sagar Patil</option>
+							</select>
+						</div>
+						<div class="col-12 col-md-8">
+							<div class="row g-3">
+								<div class="col-4">
+									<div class="text-center border-end">
+										<div class="summary-label">Total Earnings</div>
+										<div class="summary-value" id="kpiTotalEarnings">₹0</div>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="text-center border-end">
+										<div class="summary-label">Total Paid</div>
+										<div class="summary-value text-success" id="kpiTotalPaid">₹0</div>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="text-center">
+										<div class="summary-label">Pending</div>
+										<div class="summary-value text-danger" id="kpiPendingAmount">₹0</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row g-4">
+					<!-- Earnings Selection Table -->
+					<div class="col-12 col-xl-8">
+						<div class="earnings-table-container shadow-sm">
+							<div class="p-3 border-bottom d-flex justify-content-between align-items-center bg-light">
+								<h5 class="mb-0 fw-bold">Pending Earnings</h5>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="selectAll"
+										onchange="toggleSelectAll()">
+									<label class="form-check-label small fw-bold" for="selectAll">Select All</label>
+								</div>
+							</div>
+							<div class="table-responsive">
+								<table class="table table-hover mb-0" id="earningsTable">
+									<thead class="table-light">
+										<tr>
+											<th style="width: 40px;"></th>
+											<th>Student Name</th>
+											<th>Course</th>
+											<th>Course Fee</th>
+											<th>Comm. %</th>
+											<th>Earnings</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									<tbody id="earningsTableBody">
+										<tr>
+											<td colspan="7" class="text-center py-5 text-muted">
+												Please select a user to view pending earnings
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!-- Payment Details Form -->
+					<div class="col-12 col-xl-4">
+						<div class="form-section shadow-sm">
+							<h5 class="mb-4 fw-bold">Payment Details</h5>
+							<form id="paymentForm">
+								<div class="mb-3">
+									<label class="form-label">Payment Method</label>
+									<select class="form-select" id="paymentMethod" required>
+										<option value="UPI">UPI</option>
+										<option value="Bank Transfer">Bank Transfer</option>
+									</select>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Transaction ID</label>
+									<input type="text" class="form-control" id="transactionId"
+										placeholder="Enter Reference ID" required>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Payment Date</label>
+									<input type="date" class="form-control" id="paymentDate" value="2026-03-20">
+								</div>
+								<div class="mb-3">
+									<label class="form-label d-flex justify-content-between">
+										<span>Payment Receipt / Screenshot</span>
+										<span class="badge bg-soft-warning text-warning small">Recommended</span>
+									</label>
+									<div class="upload-zone p-3 border border-dashed text-center bg-light"
+										id="receiptUploadZone" style="cursor: pointer; border-radius: 8px;">
+										<input type="file" id="paymentReceipt" class="d-none"
+											accept="image/*,application/pdf">
+										<div id="uploadPlaceholder">
+											<i class="fa-solid fa-cloud-arrow-up fa-2x mb-2 text-primary"></i>
+											<p class="mb-1 small fw-bold">Click or Drag to Upload</p>
+											<p class="mb-0 text-muted tiny" style="font-size: 0.75rem;">PNG, JPG or PDF
+												(Max 5MB)</p>
+										</div>
+										<div id="filePreview" class="d-none">
+											<div class="d-flex align-items-center justify-content-center gap-2">
+												<i class="fa-solid fa-file-circle-check text-success fa-lg"></i>
+												<span id="fileNameDisplay"
+													class="small fw-bold truncate">filename.jpg</span>
+												<button type="button" class="btn-close small" style="font-size: 0.6rem;"
+													onclick="removeFile(event)"></button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mb-4">
+									<label class="form-label">Notes (Optional)</label>
+									<textarea class="form-control" id="paymentNotes" rows="2"
+										placeholder="e.g. March referral payout"></textarea>
+								</div>
+
+								<div class="payment-summary mb-4">
+									<h6 class="text-muted text-uppercase small fw-bold mb-3">Payout Summary</h6>
+									<div class="d-flex justify-content-between mb-2">
+										<span class="text-muted">Selected User:</span>
+										<span class="fw-bold" id="selectedUserDisplay">—</span>
+									</div>
+									<div class="d-flex justify-content-between mb-2">
+										<span class="text-muted">Selected Earnings:</span>
+										<span class="fw-bold" id="selectedCountDisplay">0 items</span>
+									</div>
+									<hr>
+									<div class="d-flex justify-content-between align-items-center">
+										<span class="fw-bold">Total Amount:</span>
+										<span class="summary-value text-success" id="selectedAmountDisplay">₹0</span>
+									</div>
+								</div>
+
+								<button type="button" class="btn btn-primary confirm-btn" id="confirmPaymentBtn"
+									onclick="processPayment()">
+									<i class="fa-solid fa-check-circle me-2"></i> Confirm & Process Payment
+								</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank">Technokraft Services LLP</a></small>
+			</div>
+		</footer>
+	</div>
+
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script>
+		const MOCK_DATA = {
+			"Kunal Patil": {
+				total: 10000,
+				paid: 6000,
+				pending: 4000,
+				earnings: [
+					{ id: 1, student: "Rahul Deshpande", course: "Java Full Stack", fee: 20000, comm: 10, amount: 2000, date: "2026-03-10" },
+					{ id: 2, student: "Sneha Patil", course: "Python Dev", fee: 18000, comm: 10, amount: 1800, date: "2026-03-12" },
+					{ id: 3, student: "Pooja Wagh", course: "Data Science", fee: 25000, comm: 12, amount: 3000, date: "2026-03-15" }
+				]
+			}
+		};
+
+		function inr(n) {
+			return `₹${Number(n).toLocaleString('en-IN')}`;
+		}
+
+		function loadUserEarnings() {
+			const userName = document.getElementById('userSelect').value;
+			const tbody = document.getElementById('earningsTableBody');
+			const userDisplay = document.getElementById('selectedUserDisplay');
+
+			if (!userName || !MOCK_DATA[userName]) {
+				tbody.innerHTML = `<tr><td colspan="7" class="text-center py-5 text-muted"><i class="fa-solid fa-user-check fa-3x mb-3 d-block"></i>Please select a user to view pending earnings</td></tr>`;
+				userDisplay.innerText = "—";
+				document.getElementById('kpiTotalEarnings').innerText = "₹0";
+				document.getElementById('kpiTotalPaid').innerText = "₹0";
+				document.getElementById('kpiPendingAmount').innerText = "₹0";
+				updateSummary();
+				return;
+			}
+
+			const data = MOCK_DATA[userName];
+			userDisplay.innerText = userName;
+			document.getElementById('kpiTotalEarnings').innerText = inr(data.total);
+			document.getElementById('kpiTotalPaid').innerText = inr(data.paid);
+			document.getElementById('kpiPendingAmount').innerText = inr(data.pending);
+
+			tbody.innerHTML = data.earnings.map(e => `
+                <tr>
+                    <td><input type="checkbox" class="form-check-input row-checkbox" data-amount="${e.amount}" onchange="updateSummary()"></td>
+                    <td class="fw-semibold">${e.student}</td>
+                    <td>${e.course}</td>
+                    <td>${inr(e.fee)}</td>
+                    <td>${e.comm}%</td>
+                    <td class="fw-bold text-success">${inr(e.amount)}</td>
+                    <td class="text-muted small">${e.date}</td>
+                </tr>
+            `).join('');
+
+			updateSummary();
+		}
+
+		function toggleSelectAll() {
+			const master = document.getElementById('selectAll');
+			const checks = document.querySelectorAll('.row-checkbox');
+			checks.forEach(c => c.checked = master.checked);
+			updateSummary();
+		}
+
+		function updateSummary() {
+			const checks = document.querySelectorAll('.row-checkbox:checked');
+			let total = 0;
+			checks.forEach(c => total += parseInt(c.dataset.amount));
+
+			document.getElementById('selectedCountDisplay').innerText = `${checks.length} items`;
+			document.getElementById('selectedAmountDisplay').innerText = inr(total);
+
+			const btn = document.getElementById('confirmPaymentBtn');
+			btn.disabled = total === 0;
+		}
+
+		function processPayment() {
+			const txn = document.getElementById('transactionId').value;
+			if (!txn) {
+				alert("Please enter Transaction ID");
+				return;
+			}
+
+			if (confirm("Are you sure you want to process this payment?")) {
+				alert("Payment Processed Successfully!");
+				window.location.href = "payment-history.html";
+			}
+		}
+
+		// Receipt Upload Handling
+		const uploadZone = document.getElementById('receiptUploadZone');
+		const fileInput = document.getElementById('paymentReceipt');
+		const placeholder = document.getElementById('uploadPlaceholder');
+		const preview = document.getElementById('filePreview');
+		const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+		uploadZone.addEventListener('click', () => fileInput.click());
+
+		fileInput.addEventListener('change', function () {
+			if (this.files && this.files[0]) {
+				const file = this.files[0];
+				fileNameDisplay.innerText = file.name;
+				placeholder.classList.add('d-none');
+				preview.classList.remove('d-none');
+				uploadZone.classList.remove('bg-light');
+				uploadZone.classList.add('bg-soft-success');
+				uploadZone.style.borderColor = '#198754';
+			}
+		});
+
+		function removeFile(e) {
+			e.stopPropagation();
+			fileInput.value = '';
+			placeholder.classList.remove('d-none');
+			preview.classList.add('d-none');
+			uploadZone.classList.add('bg-light');
+			uploadZone.classList.remove('bg-soft-success');
+			uploadZone.style.borderColor = '#dee2e6';
+		}
+
+		// Drag and drop basic support
+		uploadZone.addEventListener('dragover', (e) => {
+			e.preventDefault();
+			uploadZone.style.backgroundColor = '#e9ecef';
+		});
+
+		uploadZone.addEventListener('dragleave', () => {
+			if (preview.classList.contains('d-none')) {
+				uploadZone.style.backgroundColor = '#f8f9fa';
+			}
+		});
+
+		uploadZone.addEventListener('drop', (e) => {
+			e.preventDefault();
+			fileInput.files = e.dataTransfer.files;
+			fileInput.dispatchEvent(new Event('change'));
+		});
+	</script>
+</body>
+
+</html>

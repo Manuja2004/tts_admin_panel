@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Communication Templates | TTS Admin Dashboard</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage reusable email and WhatsApp templates for student communication.">
+    <meta name="author" content="Technokraft Services LLP">
+    <link rel="shortcut icon" href="favicon.ico">
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        /* ── Comm Templates Premium Styles ── */
+        .template-card {
+            border: 1px solid #edf2f7;
+            border-radius: 12px;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .template-card:hover {
+            border-color: #0d6efd;
+            background: #f8fafc;
+        }
+
+        .template-card.active {
+            border-color: #0d6efd;
+            background: #f0f7ff;
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.05);
+        }
+
+        .type-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .icon-email {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+        }
+
+        .icon-whatsapp {
+            background: rgba(37, 211, 102, 0.1);
+            color: #25d366;
+        }
+
+        .variable-badge {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            cursor: copy;
+            border: 1px dashed #cbd5e1;
+        }
+
+        .variable-badge:hover {
+            background: #e2e8f0;
+            color: #0d6efd;
+        }
+
+        .preview-pane {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #edf2f7;
+            position: sticky;
+            top: 2rem;
+            min-height: 500px;
+        }
+
+        .whatsapp-bubble {
+            background: #dcf8c6;
+            padding: 15px;
+            border-radius: 10px;
+            position: relative;
+            max-width: 80%;
+            margin: 20px auto;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .whatsapp-bubble::before {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: 0;
+            border: 10px solid transparent;
+            border-left-color: #dcf8c6;
+        }
+
+        .email-frame {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            background: #fff;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body class="app">
+    <header class="app-header fixed-top">
+        <div class="app-header-inner">
+            <div class="container-fluid py-2">
+                <div class="app-header-content">
+                    <div class="row justify-content-between align-items-center">
+                        <div class="col-auto">
+                            <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                        stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+                                </svg>
+                            </a>
+                        </div>
+                        <div class="app-search-box col text-center">
+                            <h1 class="topbar-brand mb-0 h4">Communication <span>Factory</span></h1>
+                        </div>
+                        <div class="app-utilities col-auto">
+                            <div class="app-utility-item app-user-dropdown dropdown">
+                                <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+                                    role="button"><img src="assets/images/user.png" alt="user profile"></a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="account.html">Profile Settings</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="login.html">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="app-sidepanel" class="app-sidepanel">
+            <div id="sidepanel-drop" class="sidepanel-drop"></div>
+            <div class="sidepanel-inner d-flex flex-column">
+                <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+                <div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+                    <div class="d-flex align-items-center">
+                        <img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+                            style="width: 40px; height: 40px;">
+                        <div class="user-details">
+                            <div class="user-name fw-bold small">Kunal Patil</div>
+                            <div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+                                Referral Partner</div>
+                        </div>
+                    </div>
+                    <a href="account.html"
+                        class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+                        Profile</a>
+                </div><!--//app-user-info-->
+
+                <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+                    <ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+                        <li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+                        <li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+                            <a class="nav-link active" href="index.html">
+                                <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+                                <span class="nav-link-text">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-user-management" aria-expanded="false"
+                                aria-controls="submenu-user-management">
+                                <span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+                                <span class="nav-link-text">User Management</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="counselors.html">Counselors</a></li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="referral-partners.html">Referral Partners</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+
+                        <li class="nav-item has-submenu">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-lead-management" aria-expanded="false"
+                                aria-controls="submenu-lead-management">
+                                <span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+                                <span class="nav-link-text">Lead Management</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+                                    </li>
+                                    <li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+                                            Leads</a></li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="followups.html">Follow-Ups</a></li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="followup-calendar.html">Calendar Scheduler</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-conversions" aria-expanded="false"
+                                aria-controls="submenu-conversions">
+                                <span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+                                <span class="nav-link-text">Conversions</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+                                            Students</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+                        <li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-earnings" aria-expanded="false"
+                                aria-controls="submenu-earnings">
+                                <span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                                <span class="nav-link-text">Earnings</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+                                            Overview</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-payments" aria-expanded="false"
+                                aria-controls="submenu-payments">
+                                <span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+                                <span class="nav-link-text">Payments</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="process-payments.html">Process Payments</a></li>
+                                    <li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+                                            History</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+                                <span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+                                <span class="nav-link-text">Offers</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item" data-roles="super_admin,admin,manager"><a
+                                            class="submenu-link" href="offers.html">Create Offers</a></li>
+                                    <li class="submenu-item" data-roles="super_admin,admin,manager"><a
+                                            class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+                                    <li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+                                            href="partner-onboarding.html">Partner Guide</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+                            data-roles="super_admin,admin,manager">ADMIN</li>
+
+                        <li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+                                <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+                                <span class="nav-link-text">Masters</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+                                            & Permission Master</a>
+                                    </li>
+                                    <li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+                                            Master</a></li>
+                                    <li class="submenu-item"><a class="submenu-link"
+                                            href="commission-master.html">Commission Master</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item has-submenu"
+                            data-roles="super_admin,admin,manager,counselor,referral_partner">
+                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+                                data-bs-target="#submenu-settings" aria-expanded="false"
+                                aria-controls="submenu-settings">
+                                <span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+                                <span class="nav-link-text">Settings</span>
+                                <span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+                            </a>
+                            <div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+                                <ul class="submenu-list list-unstyled">
+                                    <li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+                                            Settings</a></li>
+                                    <li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+                                            Settings</a></li>
+                                    <li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+                                            Trails</a></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul><!--//app-menu-->
+                </nav><!--//app-nav-->
+
+                <div class="app-sidepanel-footer border-top pt-2">
+                    <nav class="app-nav app-nav-footer">
+                        <ul class="app-menu footer-menu list-unstyled">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"
+                                    onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+                                    <span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+                                    <span class="nav-link-text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div><!--//app-sidepanel-footer-->
+
+
+            </div><!--//sidepanel-inner-->
+        </div><!--//app-sidepanel-->
+    </header>
+
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+            <div class="container-xl">
+
+                <div class="row g-3 mb-4 align-items-center justify-content-between">
+                    <div class="col-auto">
+                        <h1 class="app-page-title mb-0">Message Management</h1>
+                        <p class="text-muted small">Compose and standardize how counselors contact leads.</p>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary" onclick="createNewTemp()"><i
+                                class="fa-solid fa-plus me-2"></i>New Template</button>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Left: Template List -->
+                    <div class="col-md-7">
+                        <div class="row g-3" id="templateGrid">
+                            <!-- Dynamic Templates -->
+                        </div>
+                    </div>
+
+                    <!-- Right: Editor/Preview -->
+                    <div class="col-md-5">
+                        <div class="preview-pane shadow-sm">
+                            <div class="p-3 border-bottom bg-light d-flex justify-content-between">
+                                <h6 class="fw-bold mb-0">Live Preview Engine</h6>
+                                <span id="pType" class="badge bg-primary">WhatsApp</span>
+                            </div>
+
+                            <div class="p-4" id="previewArea">
+                                <!-- Dynamic Preview -->
+                            </div>
+
+                            <div class="p-4 border-top">
+                                <h6 class="fw-bold small mb-2 uppercase text-muted">Field Variables</h6>
+                                <div class="variables">
+                                    <span class="variable-badge">{student_name}</span>
+                                    <span class="variable-badge">{course_name}</span>
+                                    <span class="variable-badge">{admission_link}</span>
+                                    <span class="variable-badge">{counselor_name}</span>
+                                    <span class="variable-badge">{payout_amount}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Edit Template -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0">
+                <div class="modal-header bg-primary text-white p-4">
+                    <h5 class="modal-title fw-bold">Design Messenger Protocol</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-8">
+                            <label class="form-label fw-bold small text-muted uppercase">Template Title</label>
+                            <input type="text" class="form-control" id="fTitle"
+                                placeholder="e.g. Course Enrollment Success">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-muted uppercase">Channel</label>
+                            <select class="form-select" id="fChannel">
+                                <option value="WhatsApp">WhatsApp Message</option>
+                                <option value="Email">Official Email</option>
+                                <option value="SMS">Short SMS</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small text-muted uppercase">Subject (For Email Only)</label>
+                        <input type="text" class="form-control" id="fSubject"
+                            placeholder="Enrollment Confirmation for {course_name}">
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label fw-bold small text-muted uppercase">Message Body</label>
+                        <textarea class="form-control" id="fBody" rows="10"
+                            placeholder="Hello {student_name}, Congratulations on your admission to {course_name}..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer p-4 bg-light">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Discard</button>
+                    <button class="btn btn-primary px-5" onclick="saveTemplate()">Publish Protocol</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div><!--//app-content-->
+        <footer class="app-footer">
+            <div class="container text-center py-3">
+                <!-- Design by Technokraft Services LLP -->
+                <small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+                        target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+                        href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &
+                        Solution Pvt. Ltd.</a></small>
+            </div>
+        </footer><!--//app-footer-->
+    </div><!--//app-wrapper-->
+
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        let TEMPLATES = [
+            { id: 1, title: "Course Onboarding", type: "WhatsApp", channel: "WhatsApp", body: "Hello {student_name}, welcome to TechnoKraft! We are excited to have you in the {course_name} batch. Your career journey starts now." },
+            { id: 2, title: "Payment Confirmation", type: "Email", channel: "Email", body: "Dear {student_name},\n\We have received your payment for {course_name}. You can now access your student portal using the link below.\n\Regards,\nTeam TechnoKraft" },
+            { id: 3, title: "Follow-up Reminder", type: "WhatsApp", channel: "WhatsApp", body: "Hi {student_name}, this is {counselor_name} from TechnoKraft. Are you still interested in joining our {course_name} program starting this Monday?" }
+        ];
+
+        function render() {
+            const grid = document.getElementById('templateGrid');
+            grid.innerHTML = TEMPLATES.map(t => `
+                <div class="col-12">
+                    <div class="template-card p-4 shadow-sm" onclick="preview('${t.id}')">
+                        <div class="d-flex justify-content-between align-items-center mb-0">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="type-icon ${t.type === 'Email' ? 'icon-email' : 'icon-whatsapp'}">
+                                    <i class="fa-solid ${t.type === 'Email' ? 'fa-envelope' : 'fa-whatsapp'} fa-lg"></i>
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-1">${t.title}</h6>
+                                    <div class="tiny text-muted uppercase fw-bold">${t.channel} Protocol</div>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <div class="small fw-bold text-muted mb-1">Last Sync: Today</div>
+                                <button class="btn btn-sm btn-link text-primary p-0"><i class="fa-solid fa-pen-to-square"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            if (TEMPLATES.length > 0) preview(TEMPLATES[0].id);
+        }
+
+        function preview(id) {
+            const t = TEMPLATES.find(x => x.id == id);
+            document.querySelectorAll('.template-card').forEach(el => el.classList.remove('active'));
+            // Note: Select actual element logic omitted for demo
+
+            document.getElementById('pType').innerText = t.type;
+            const area = document.getElementById('previewArea');
+
+            let parsed = t.body.replace(/{student_name}/g, "<b>Akash Patel</b>")
+                .replace(/{course_name}/g, "<b>Full Stack Python</b>")
+                .replace(/{counselor_name}/g, "<b>Amit S.</b>");
+
+            if (t.type === 'WhatsApp') {
+                area.innerHTML = `<div class="whatsapp-bubble small shadow-sm">${parsed.replace(/\n/g, '<br>')}</div>`;
+                document.getElementById('pType').className = "badge bg-success";
+            } else {
+                area.innerHTML = `<div class="email-frame shadow-sm fs-7">
+                    <div class="border-bottom pb-2 mb-3 text-muted small"><b>Subject:</b> Enrollment Success...</div>
+                    ${parsed.replace(/\n/g, '<br>')}
+                </div>`;
+                document.getElementById('pType').className = "badge bg-primary";
+            }
+        }
+
+        function createNewTemp() {
+            new bootstrap.Modal(document.getElementById('editModal')).show();
+        }
+
+        render();
+    </script>
+</body>
+
+</html>

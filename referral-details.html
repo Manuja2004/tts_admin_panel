@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Referral Details | College Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Referral Management - Referral Details">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		.kv-label {
+			font-size: 0.75rem;
+			color: #5d6778;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin-bottom: 2px;
+		}
+
+		.kv-value {
+			font-size: 0.95rem;
+			color: #252930;
+		}
+
+		.badge-status {
+			font-size: 0.78rem;
+			padding: 0.35em 0.75em;
+			border-radius: 20px;
+			font-weight: 600;
+		}
+
+		.badge-new {
+			background: #e3f0fb;
+			color: #1976d2;
+		}
+
+		.badge-contacted {
+			background: #fff8e1;
+			color: #f57c00;
+		}
+
+		.badge-interested {
+			background: #e8f5e9;
+			color: #2e7d32;
+		}
+
+		.badge-not-interested {
+			background: #fce4ec;
+			color: #c62828;
+		}
+
+		.badge-converted {
+			background: #e0f2f1;
+			color: #00695c;
+		}
+
+		.lock-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: 0.4rem;
+			padding: 0.25rem 0.6rem;
+			border-radius: 999px;
+			background: #f1f3f5;
+			color: #5d6778;
+			font-size: 0.82rem;
+			font-weight: 600;
+		}
+
+		.timeline {
+			position: relative;
+			padding-left: 1.25rem;
+		}
+
+		.timeline:before {
+			content: "";
+			position: absolute;
+			left: 0.4rem;
+			top: 0.2rem;
+			bottom: 0.2rem;
+			width: 2px;
+			background: #e7e9ed;
+		}
+
+		.timeline-item {
+			position: relative;
+			padding: 0 0 1rem 0;
+		}
+
+		.timeline-item:last-child {
+			padding-bottom: 0;
+		}
+
+		.timeline-dot {
+			position: absolute;
+			left: 0.1rem;
+			top: 0.2rem;
+			width: 0.65rem;
+			height: 0.65rem;
+			border-radius: 50%;
+			background: #fff;
+			border: 2px solid #adb5bd;
+		}
+
+		.timeline-item.is-done .timeline-dot {
+			border-color: #d92525;
+		}
+
+		.timeline-title {
+			font-weight: 700;
+		}
+
+		.timeline-meta {
+			font-size: 0.85rem;
+			color: #6c757d;
+		}
+
+		.action-btns .btn {
+			border-radius: 8px;
+		}
+
+		.action-btns .btn:disabled {
+			opacity: 0.55;
+			pointer-events: auto;
+		}
+
+		@media (max-width: 768px) {
+			.header-actions {
+				width: 100%;
+			}
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div>
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
+									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+									title="Notifications">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+										<path fill-rule="evenodd"
+											d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+									</svg>
+									<span class="icon-badge">3</span>
+								</a>
+								<div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
+									<div class="dropdown-menu-header p-3">
+										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
+									</div>
+									<div class="dropdown-menu-content">
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto"><img class="profile-image"
+														src="assets/images/profiles/profile-1.png" alt=""></div>
+												<div class="col">
+													<div class="info">
+														<div class="desc">Nikita Patil shared a file with you.</div>
+														<div class="meta"> 2 hrs ago</div>
+													</div>
+												</div>
+											</div><a class="link-mask" href="notifications.html"></a>
+										</div>
+									</div>
+									<div class="dropdown-menu-footer p-2 text-center"><a href="notifications.html">View
+											all</a></div>
+								</div>
+							</div>
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+		</div>
+	</header>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb mb-1">
+								<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+								<li class="breadcrumb-item"><a href="leads.html">Leads</a></li>
+								<li class="breadcrumb-item active">Referral Details</li>
+							</ol>
+						</nav>
+						<div class="d-flex align-items-center gap-2 flex-wrap">
+							<h1 class="app-page-title mb-0">Referral Details</h1>
+							<span id="lockChip" class="lock-chip" style="display:none;"><i
+									class="fa-solid fa-lock"></i>Locked</span>
+						</div>
+						<div class="text-muted small" id="subtitle">—</div>
+					</div>
+					<div class="col-auto header-actions">
+						<div class="action-btns d-flex gap-2 flex-nowrap justify-content-end align-items-center">
+							<button class="btn btn-light" id="backBtn"><i
+									class="fa-solid fa-arrow-left me-2"></i>Back</button>
+							<button class="btn btn-warning" id="editBtn"><i
+									class="fa-solid fa-pen me-2"></i>Edit</button>
+							<button class="btn btn-danger" id="deleteBtn"><i
+									class="fa-solid fa-trash me-2"></i>Delete</button>
+						</div>
+						<div class="text-end small text-muted mt-1" id="actionHint">—</div>
+					</div>
+				</div>
+
+				<div class="row g-4">
+					<div class="col-12 col-lg-7">
+						<div class="app-card shadow-sm mb-4">
+							<div class="app-card-body p-3 p-lg-4">
+								<div class="d-flex align-items-start justify-content-between gap-3">
+									<div>
+										<div class="h4 mb-1" id="studentName">—</div>
+										<div class="text-muted" id="studentMeta">—</div>
+									</div>
+									<div class="text-end">
+										<div id="statusBadgeWrap">—</div>
+										<div class="text-muted small mt-2">Assigned Counselor: <span
+												id="counselorName">—</span></div>
+									</div>
+								</div>
+								<hr class="my-3">
+								<div class="row g-3">
+									<div class="col-12 col-md-4">
+										<div class="kv-label">Phone</div>
+										<div class="kv-value"><a id="phoneLink" href="#"
+												class="text-decoration-none">—</a></div>
+									</div>
+									<div class="col-12 col-md-4">
+										<div class="kv-label">Email</div>
+										<div class="kv-value" id="emailVal">—</div>
+									</div>
+									<div class="col-12 col-md-4">
+										<div class="kv-label">Qualification</div>
+										<div class="kv-value" id="qualVal">—</div>
+									</div>
+									<div class="col-12 col-md-4">
+										<div class="kv-label">Course Interested</div>
+										<div class="kv-value" id="courseVal">—</div>
+									</div>
+									<div class="col-12 col-md-4">
+										<div class="kv-label">Preferred Batch</div>
+										<div class="kv-value" id="batchVal">—</div>
+									</div>
+									<div class="col-12 col-md-4">
+										<div class="kv-label">Referral Date</div>
+										<div class="kv-value" id="dateVal">—</div>
+									</div>
+								</div>
+								<div class="mt-3">
+									<div class="kv-label">Notes / Remarks</div>
+									<div class="kv-value" id="notesVal">—</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="app-card shadow-sm mb-4">
+							<div class="app-card-header p-3">
+								<div class="d-flex align-items-center">
+									<i class="fa-solid fa-timeline me-2 text-muted"></i>
+									<h4 class="app-card-title mb-0">Status Timeline</h4>
+								</div>
+							</div>
+							<div class="app-card-body p-3 p-lg-4">
+								<div class="timeline" id="timeline"></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-5">
+						<div class="app-card shadow-sm mb-4">
+							<div class="app-card-header p-3">
+								<div class="d-flex align-items-center">
+									<i class="fa-solid fa-headset me-2 text-muted"></i>
+									<h4 class="app-card-title mb-0">Counselor Interaction</h4>
+								</div>
+							</div>
+							<div class="app-card-body p-3 p-lg-4">
+								<div class="kv-label">Latest Remark</div>
+								<div class="kv-value" id="latestRemark">—</div>
+								<hr class="my-3">
+								<div class="kv-label">Next Follow-up</div>
+								<div class="kv-value" id="nextFollowup">—</div>
+								<hr class="my-3">
+								<div class="kv-label">Follow-up Notes</div>
+								<ul class="list-unstyled mb-0" id="followupNotes"></ul>
+								<div class="text-muted small mt-2">College view is read-only. Status and follow-ups are
+									managed by counselor/admin.</div>
+							</div>
+						</div>
+
+						<div class="app-card shadow-sm mb-4" id="conversionCard" style="display:none;">
+							<div class="app-card-header p-3">
+								<div class="d-flex align-items-center">
+									<i class="fa-solid fa-graduation-cap me-2 text-muted"></i>
+									<h4 class="app-card-title mb-0">Conversion Details</h4>
+								</div>
+							</div>
+							<div class="app-card-body p-3 p-lg-4">
+								<div class="row g-3">
+									<div class="col-12 col-md-6">
+										<div class="kv-label">Enrolled Course</div>
+										<div class="kv-value" id="enrolledCourse">—</div>
+									</div>
+									<div class="col-12 col-md-6">
+										<div class="kv-label">Admission Date</div>
+										<div class="kv-value" id="admissionDate">—</div>
+									</div>
+									<div class="col-12">
+										<div class="kv-label">Course Fee</div>
+										<div class="kv-value" id="courseFee">—</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="app-card shadow-sm" id="commissionCard" style="display:none;">
+							<div class="app-card-header p-3">
+								<div class="d-flex align-items-center">
+									<i class="fa-solid fa-indian-rupee-sign me-2 text-muted"></i>
+									<h4 class="app-card-title mb-0">Commission &amp; Earnings</h4>
+								</div>
+							</div>
+							<div class="app-card-body p-3 p-lg-4">
+								<div class="row g-3">
+									<div class="col-12 col-md-6">
+										<div class="kv-label">Commission %</div>
+										<div class="kv-value" id="commissionPercent">—</div>
+									</div>
+									<div class="col-12 col-md-6">
+										<div class="kv-label">Earned Amount</div>
+										<div class="kv-value" id="earnedAmount">—</div>
+									</div>
+									<div class="col-12">
+										<div class="kv-label">Payment Status</div>
+										<div class="kv-value" id="paymentStatus">—</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="app-card shadow-sm mt-4">
+					<div class="app-card-header p-3">
+						<div class="d-flex align-items-center">
+							<i class="fa-solid fa-clock-rotate-left me-2 text-muted"></i>
+							<h4 class="app-card-title mb-0">Activity Log</h4>
+						</div>
+					</div>
+					<div class="app-card-body p-3 p-lg-4">
+						<ul class="list-unstyled mb-0" id="activityLog"></ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+						href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &amp;
+						Solution Pvt. Ltd.</a></small>
+			</div>
+		</footer>
+	</div>
+
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script>
+		function getQueryParam(name) {
+			const url = new URL(window.location.href);
+			return url.searchParams.get(name);
+		}
+		function formatDate(d) {
+			if (!d) return '—';
+			const [y, m, dd] = d.split('-');
+			const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+			return `${dd} ${months[+m - 1]} ${y}`;
+		}
+		function inr(n) {
+			if (n == null || n === '') return '—';
+			try { return `₹${Number(n).toLocaleString('en-IN')}`; } catch { return `₹${n}`; }
+		}
+		function statusBadge(s) {
+			const map = { 'NEW': 'badge-new', 'CONTACTED': 'badge-contacted', 'INTERESTED': 'badge-interested', 'NOT_INTERESTED': 'badge-not-interested', 'CONVERTED': 'badge-converted' };
+			const label = (s || '—').replaceAll('_', ' ');
+			return `<span class="badge-status ${map[s] || ''}">${label}</span>`;
+		}
+		function canEdit(s) { return s !== 'CONVERTED'; }
+		function canDelete(s) { return s === 'NEW'; }
+
+		function defaultData() {
+			return [
+				{ id: 'REF001', name: 'Rahul Sharma', phone: '9876543210', email: 'rahul.sharma@gmail.com', course: 'Java Full Stack', batch: 'Weekend', qual: 'B.E. Computer', status: 'CONVERTED', date: '2026-03-01', notes: 'Interested in job placement support.', counselor: { name: 'Nikita Patil', latestRemark: 'Admission confirmed. Shared receipt and welcome kit.', nextFollowup: '—', notes: ['Converted successfully. No further follow-up needed.'] }, conversion: { enrolledCourse: 'Java Full Stack', admissionDate: '2026-03-05', fee: 20000 }, commission: { percent: 10, earned: 2000, paymentStatus: 'Pending' }, activity: [{ t: 'Referral created', d: '2026-03-01' }, { t: 'Status updated to CONTACTED', d: '2026-03-02' }, { t: 'Status updated to INTERESTED', d: '2026-03-03' }, { t: 'Status updated to CONVERTED', d: '2026-03-05' }] },
+				{ id: 'REF005', name: 'Vikram Singh', phone: '7890123456', email: 'vikram.s@gmail.com', course: 'Java Full Stack', batch: 'Morning', qual: 'Diploma', status: 'NEW', date: '2026-03-08', notes: 'Referred by college notice board.', counselor: { name: 'Aman Deshmukh', latestRemark: 'Not contacted yet.', nextFollowup: '2026-03-19', notes: ['Queue for first call.'] }, activity: [{ t: 'Referral created', d: '2026-03-08' }] },
+				{ id: 'REF003', name: 'Aman Deshmukh', phone: '8765432190', email: 'aman.deshmukh@yahoo.com', course: 'Web Development', batch: 'Evening', qual: 'BCA', status: 'CONTACTED', date: '2026-03-05', notes: 'Called twice, pending callback.', counselor: { name: 'Sneha Kulkarni', latestRemark: 'Connected. Asked to share brochure on WhatsApp.', nextFollowup: '2026-03-20', notes: ['Connected; requested brochure.', 'Follow-up scheduled for weekend batch.'] }, activity: [{ t: 'Referral created', d: '2026-03-05' }, { t: 'Status updated to CONTACTED', d: '2026-03-06' }] },
+				{ id: 'REF006', name: 'Pooja Gupta', phone: '9988776655', email: 'pooja.g@gmail.com', course: 'Data Science', batch: 'Evening', qual: 'M.Sc.', status: 'NOT_INTERESTED', date: '2026-03-09', notes: 'Not interested on follow up.', counselor: { name: 'Kiran More', latestRemark: 'Not interested due to timing constraints.', nextFollowup: '—', notes: ['Closed as NOT_INTERESTED.'] }, activity: [{ t: 'Referral created', d: '2026-03-09' }, { t: 'Status updated to NOT_INTERESTED', d: '2026-03-10' }] }
+			];
+		}
+
+		function loadReferrals() {
+			try {
+				const raw = localStorage.getItem('tts_referrals');
+				if (!raw) return defaultData();
+				const data = JSON.parse(raw);
+				return Array.isArray(data) ? data : defaultData();
+			} catch {
+				return defaultData();
+			}
+		}
+
+		function buildTimeline(status, date) {
+			const flow = ['NEW', 'CONTACTED', 'INTERESTED', 'NOT_INTERESTED', 'CONVERTED'];
+			const idx = flow.indexOf(status);
+			return flow.map((s, i) => {
+				const done = idx >= 0 && i <= idx;
+				const d = done ? formatDate(date) : '—';
+				return `<div class="timeline-item ${done ? 'is-done' : ''}">
+			<div class="timeline-dot"></div>
+			<div class="ms-3">
+				<div class="timeline-title">${s.replaceAll('_', ' ')}</div>
+				<div class="timeline-meta">${d}</div>
+			</div>
+		</div>`;
+			}).join('');
+		}
+
+		function renderActivity(items) {
+			const el = document.getElementById('activityLog');
+			if (!items || !items.length) {
+				el.innerHTML = `<li class="text-muted">No activity yet.</li>`;
+				return;
+			}
+			el.innerHTML = items.map(x => `
+		<li class="d-flex justify-content-between border-bottom py-2">
+			<div class="fw-medium">${x.t}</div>
+			<div class="text-muted small">${formatDate(x.d)}</div>
+		</li>`).join('');
+		}
+
+		const id = getQueryParam('id');
+		const referrals = loadReferrals();
+		const r = referrals.find(x => x.id === id) || referrals[0];
+
+		document.getElementById('subtitle').textContent = r ? `${r.id} · Created ${formatDate(r.date)}` : '—';
+		document.getElementById('studentName').textContent = r.name || '—';
+		document.getElementById('studentMeta').textContent = `${r.course || '—'} · ${r.batch || '—'}`;
+		document.getElementById('statusBadgeWrap').innerHTML = statusBadge(r.status);
+		document.getElementById('counselorName').textContent = (r.counselor && r.counselor.name) ? r.counselor.name : '—';
+		document.getElementById('phoneLink').textContent = r.phone ? `+91 ${r.phone}` : '—';
+		document.getElementById('phoneLink').href = r.phone ? `tel:+91${r.phone}` : '#';
+		document.getElementById('emailVal').textContent = r.email || '—';
+		document.getElementById('qualVal').textContent = r.qual || '—';
+		document.getElementById('courseVal').textContent = r.course || '—';
+		document.getElementById('batchVal').textContent = r.batch || '—';
+		document.getElementById('dateVal').textContent = formatDate(r.date);
+		document.getElementById('notesVal').textContent = r.notes || '—';
+
+		document.getElementById('timeline').innerHTML = buildTimeline(r.status, r.date);
+
+		document.getElementById('latestRemark').textContent = (r.counselor && r.counselor.latestRemark) ? r.counselor.latestRemark : '—';
+		document.getElementById('nextFollowup').textContent = (r.counselor && r.counselor.nextFollowup) ? (r.counselor.nextFollowup === '—' ? '—' : formatDate(r.counselor.nextFollowup)) : '—';
+		const notesEl = document.getElementById('followupNotes');
+		const notes = (r.counselor && Array.isArray(r.counselor.notes)) ? r.counselor.notes : [];
+		notesEl.innerHTML = notes.length ? notes.map(n => `<li class="border-bottom py-2">${n}</li>`).join('') : `<li class="text-muted">No notes yet.</li>`;
+
+		if (r.status === 'CONVERTED') {
+			document.getElementById('lockChip').style.display = 'inline-flex';
+			const conv = r.conversion || {};
+			document.getElementById('conversionCard').style.display = '';
+			document.getElementById('commissionCard').style.display = '';
+			document.getElementById('enrolledCourse').textContent = conv.enrolledCourse || r.course || '—';
+			document.getElementById('admissionDate').textContent = conv.admissionDate ? formatDate(conv.admissionDate) : '—';
+			document.getElementById('courseFee').textContent = inr(conv.fee);
+			const com = r.commission || {};
+			document.getElementById('commissionPercent').textContent = (com.percent != null && com.percent !== '') ? `${com.percent}%` : '—';
+			document.getElementById('earnedAmount').textContent = inr(com.earned);
+			document.getElementById('paymentStatus').textContent = com.paymentStatus || '—';
+		}
+
+		renderActivity(r.activity);
+
+		const editBtn = document.getElementById('editBtn');
+		const deleteBtn = document.getElementById('deleteBtn');
+		const hint = document.getElementById('actionHint');
+
+		editBtn.disabled = !canEdit(r.status);
+		deleteBtn.disabled = !canDelete(r.status);
+
+		editBtn.setAttribute('title', editBtn.disabled ? 'Cannot edit after conversion' : 'Edit basic info');
+		deleteBtn.setAttribute('title', deleteBtn.disabled ? 'Delete allowed only for NEW' : 'Delete referral');
+
+		hint.textContent = r.status === 'CONVERTED'
+			? 'This referral is locked after conversion.'
+			: (r.status === 'NEW' ? 'You can edit or delete this referral.' : 'You can edit basic info. Status is managed by counselor/admin.');
+
+		const backTo = 'leads.html';
+		document.getElementById('backBtn').addEventListener('click', () => window.location.href = backTo);
+		editBtn.addEventListener('click', () => {
+			if (editBtn.disabled) return;
+			window.location.href = `leads.html?action=edit&id=${encodeURIComponent(r.id)}`;
+		});
+		deleteBtn.addEventListener('click', () => {
+			if (deleteBtn.disabled) return;
+			window.location.href = `leads.html?action=delete&id=${encodeURIComponent(r.id)}`;
+		});
+	</script>
+</body>
+
+</html>

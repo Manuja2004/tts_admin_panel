@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Upload Document | TTS Admin Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Upload Secure Documents">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		.upload-container {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.dropzone-area {
+			border: 2px dashed #0d6efd;
+			border-radius: 12px;
+			padding: 3rem 1rem;
+			text-align: center;
+			background: #f8fbff;
+			transition: all 0.3s ease;
+			cursor: pointer;
+		}
+
+		.dropzone-area:hover,
+		.dropzone-area.dragover {
+			background: #e7f1ff;
+			border-color: #0b5ed7;
+		}
+
+		.upload-icon {
+			font-size: 3rem;
+			color: #0d6efd;
+			margin-bottom: 1.5rem;
+		}
+
+		.file-item {
+			background: #fff;
+			border: 1px solid #e7e9ed;
+			border-radius: 8px;
+			padding: 1rem;
+			margin-top: 1rem;
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div>
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col-auto">
+						<h1 class="app-page-title mb-0">Upload Document</h1>
+					</div>
+					<div class="col-auto">
+						<a class="btn btn-outline-secondary" href="document-manager.html"><i
+								class="fa-solid fa-arrow-left me-2"></i>Back to Manager</a>
+					</div>
+				</div>
+
+				<div class="upload-container">
+					<div class="app-card shadow-sm p-4">
+						<form id="upload-form">
+							<div class="row g-3 mb-4">
+								<div class="col-12 col-md-6">
+									<label class="form-label fw-bold small">Assign to Lead / Student</label>
+									<select class="form-select form-select-sm" required>
+										<option value="">Select User...</option>
+										<option value="1">Kunal Patil</option>
+										<option value="2">Nina Joshi</option>
+										<option value="3">Rahul Wagh</option>
+									</select>
+								</div>
+								<div class="col-12 col-md-6">
+									<label class="form-label fw-bold small">Document Category</label>
+									<select class="form-select form-select-sm" required>
+										<option value="">Select Category...</option>
+										<option value="id">ID Proof (Aadhar/PAN)</option>
+										<option value="payment">Payment Screenshot</option>
+										<option value="academic">Academic Certificate</option>
+										<option value="other">Other</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="dropzone-area mb-4" id="dropzone">
+								<input type="file" id="fileInput" class="d-none" multiple>
+								<div class="upload-icon">
+									<i class="fa-solid fa-cloud-arrow-up"></i>
+								</div>
+								<h5 class="fw-bold">Drag and drop files here</h5>
+								<p class="text-muted small">or click to browse your computer</p>
+								<p class="text-muted tiny mb-0">Max file size: 10MB. Supports: JPG, PNG, PDF, DOCX</p>
+							</div>
+
+							<div id="file-list" class="mb-4">
+								<!-- Dynamically populated files -->
+							</div>
+
+							<div class="text-end">
+								<button type="button" class="btn btn-outline-secondary me-2">Cancel</button>
+								<button type="submit" class="btn btn-primary px-4">Upload All</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank">Technokraft Services LLP</a></small>
+			</div>
+		</footer>
+	</div>
+
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script>
+		const dropzone = document.getElementById('dropzone');
+		const fileInput = document.getElementById('fileInput');
+		const fileList = document.getElementById('file-list');
+
+		dropzone.addEventListener('click', () => fileInput.click());
+
+		dropzone.addEventListener('dragover', (e) => {
+			e.preventDefault();
+			dropzone.classList.add('dragover');
+		});
+
+		dropzone.addEventListener('dragleave', () => {
+			dropzone.classList.remove('dragover');
+		});
+
+		dropzone.addEventListener('drop', (e) => {
+			e.preventDefault();
+			dropzone.classList.remove('dragover');
+			handleFiles(e.dataTransfer.files);
+		});
+
+		fileInput.addEventListener('change', (e) => {
+			handleFiles(e.target.files);
+		});
+
+		function handleFiles(files) {
+			Array.from(files).forEach(file => {
+				const reader = new FileReader();
+				const item = document.createElement('div');
+				item.className = 'file-item d-flex align-items-center justify-content-between shadow-sm';
+				item.innerHTML = `
+					<div class="d-flex align-items-center">
+						<i class="fa-solid fa-file-lines fa-2x text-primary me-3"></i>
+						<div>
+							<div class="fw-bold small">${file.name}</div>
+							<div class="text-muted tiny">${(file.size / 1024).toFixed(2)} KB</div>
+						</div>
+					</div>
+					<button type="button" class="btn btn-link text-danger p-0" onclick="this.parentElement.remove()">
+						<i class="fa-solid fa-trash"></i>
+					</button>
+				`;
+				fileList.appendChild(item);
+			});
+		}
+
+		document.getElementById('upload-form').addEventListener('submit', (e) => {
+			e.preventDefault();
+			alert('Files mapped and uploaded successfully!');
+			window.location.href = 'document-manager.html';
+		});
+	</script>
+</body>
+
+</html>

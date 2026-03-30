@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Partner Welcome & Onboarding | TTS Dashboard</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Welcome guide and onboarding steps for new referral partners.">
+    <meta name="author" content="Technokraft Services LLP">
+    <link rel="shortcut icon" href="favicon.ico">
+    <script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+    <link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+    <style>
+        /* ── Onboarding Experience Styles ── */
+        .hero-banner {
+            background: linear-gradient(135deg, #0d6efd 0%, #6c5ce7 100%);
+            padding: 4rem 2rem;
+            color: #fff;
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(13, 110, 253, 0.2);
+        }
+
+        .step-icon-big {
+            width: 80px;
+            height: 80px;
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .onboarding-card {
+            border: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fff;
+            height: 100%;
+            border: 1px solid #edf2f7;
+        }
+
+        .onboarding-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: #0d6efd;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .progress-dot.fill {
+            background: #0d6efd;
+            box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+        }
+
+        .action-cta {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .video-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-box i {
+            font-size: 4rem;
+            color: #fff;
+            opacity: 0.8;
+            z-index: 2;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .video-box i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .video-box .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .marketing-asset {
+            border: 1px solid #edf2f7;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body class="app">
+    <header
+        class="app-header fixed-top shadow-sm px-4 py-2 d-flex justify-content-between align-items-center bg-white border-bottom">
+        <h1 class="topbar-brand mb-0 h5">TechnoKraft <span>Partner Academy</span></h1>
+        <div class="d-flex align-items-center gap-3">
+            <span class="small fw-bold text-muted">Aman Singh</span>
+            <img src="assets/images/user.png" style="width:32px; height:32px;" class="rounded-circle">
+        </div>
+    </header>
+
+    <div class="app-wrapper ms-0 pt-5 mt-4">
+        <div class="app-content pt-3 p-md-3 p-lg-5">
+            <div class="container-xl">
+
+                <!-- Hero Section -->
+                <div class="hero-banner">
+                    <h1 class="fw-black mb-3 text-white">Welcome to the inner circle, Partner.</h1>
+                    <p class="h5 text-white opacity-75 mb-4">Let's get your first ₹10,000 commission payout in 3 simple
+                        steps.</p>
+                    <div class="d-flex justify-content-center gap-2 mb-2">
+                        <span class="progress-dot fill"></span>
+                        <span class="progress-dot"></span>
+                        <span class="progress-dot"></span>
+                    </div>
+                    <div class="small fw-bold opacity-75">Your onboarding is 33% complete</div>
+                </div>
+
+                <!-- 3 Step Process -->
+                <div class="row g-4 mb-5">
+                    <div class="col-md-4">
+                        <div class="onboarding-card p-4">
+                            <div class="step-icon-big"><i class="fa-solid fa-id-card"></i></div>
+                            <h5 class="fw-bold mb-2">1. Validate Identity</h5>
+                            <p class="text-muted small mb-4">Upload your bank details and PAN card to activate your
+                                wallet for payouts.</p>
+                            <button class="btn btn-primary w-100 py-2 rounded-pill fw-bold">Finish KYC Now</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="onboarding-card p-4">
+                            <div class="step-icon-big"><i class="fa-solid fa-link-slash"></i></div>
+                            <h5 class="fw-bold mb-2">2. Generate Referral Link</h5>
+                            <p class="text-muted small mb-4">Create unique tracking links to share on WhatsApp, Facebook
+                                or Instagram.</p>
+                            <button
+                                class="btn btn-outline-primary w-100 py-2 rounded-pill fw-bold disabled">Locked</button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="onboarding-card p-4">
+                            <div class="step-icon-big"><i class="fa-solid fa-rocket"></i></div>
+                            <h5 class="fw-bold mb-2">3. Add Your First Lead</h5>
+                            <p class="text-muted small mb-4">Submit your first student referral and track their status
+                                in real-time.</p>
+                            <button
+                                class="btn btn-outline-primary w-100 py-2 rounded-pill fw-bold disabled">Locked</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-5 mb-5">
+                    <!-- Training Video -->
+                    <div class="col-lg-7">
+                        <h4 class="fw-bold mb-4">How to earn with TTS?</h4>
+                        <div class="video-box shadow-lg">
+                            <div class="overlay"></div>
+                            <i class="fa-solid fa-play-circle"></i>
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                                style="width:100%; height:100%; object-fit:cover; opacity: 0.6;">
+                        </div>
+                        <p class="text-muted small mt-3"><i class="fa-solid fa-info-circle me-1"></i> Watch this
+                            2-minute video to understand our payout cycles and commission structures.</p>
+                    </div>
+
+                    <!-- Downloads & Resources -->
+                    <div class="col-lg-5">
+                        <h4 class="fw-bold mb-4">Marketing Toolkit</h4>
+                        <div class="p-4 bg-white border rounded-4">
+                            <div class="marketing-asset">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-file-image text-danger fa-lg"></i>
+                                    <div>
+                                        <div class="fw-bold small">Instagram Stories Kit</div>
+                                        <div class="tiny text-muted">5 Banners (JPG)</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-light border"><i
+                                        class="fa-solid fa-download"></i></button>
+                            </div>
+                            <div class="marketing-asset">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-file-pdf text-warning fa-lg"></i>
+                                    <div>
+                                        <div class="fw-bold small">Course Brochure 2026</div>
+                                        <div class="tiny text-muted">All courses list</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-light border"><i
+                                        class="fa-solid fa-download"></i></button>
+                            </div>
+                            <div class="marketing-asset">
+                                <div class="d-flex align-items-center gap-3">
+                                    <i class="fa-solid fa-file-word text-primary fa-lg"></i>
+                                    <div>
+                                        <div class="fw-bold small">Sample Script (Copy)</div>
+                                        <div class="tiny text-muted">1.2 KB (DOCX)</div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-sm btn-light border"><i
+                                        class="fa-solid fa-download"></i></button>
+                            </div>
+                            <button class="btn btn-link w-100 mt-3 text-decoration-none small">View all assets in
+                                library <i class="fa-solid fa-arrow-right ms-1"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-cta mb-5 border-0 bg-dark text-white shadow-lg p-5">
+                    <div>
+                        <h3 class="fw-bold mb-1">Need help setting up?</h3>
+                        <p class="mb-0 opacity-75">Our Partner Manager is available for a 1-on-1 Zoom call.</p>
+                    </div>
+                    <button class="btn btn-light btn-lg px-5 py-3 fw-bold rounded-3">Schedule Call</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+        </div><!--//app-content-->
+        <footer class="app-footer">
+            <div class="container text-center py-3">
+                <!-- Design by Technokraft Services LLP -->
+                <small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+                        target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+                        href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &
+                        Solution Pvt. Ltd.</a></small>
+            </div>
+        </footer><!--//app-footer-->
+    </div><!--//app-wrapper-->
+
+    <script src="assets/plugins/popper.min.js"></script>
+    <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

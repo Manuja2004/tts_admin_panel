@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Payments | College Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Referral Management - Payments">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		.kpi-card {
+			overflow: hidden;
+		}
+
+		.kpi-icon {
+			width: 44px;
+			height: 44px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.1rem;
+		}
+
+		.kpi-amount {
+			font-size: 1.6rem;
+			font-weight: 800;
+			letter-spacing: -0.02em;
+		}
+
+		.kpi-label {
+			color: #6c757d;
+			font-weight: 600;
+		}
+
+		.kpi-sub {
+			color: #6c757d;
+			font-size: 0.85rem;
+		}
+
+		.table-toolbar {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 0.5rem 0.75rem;
+			align-items: center;
+			margin-bottom: 0.75rem;
+		}
+
+		.search-box {
+			position: relative;
+		}
+
+		.search-box i,
+		.search-box svg {
+			position: absolute;
+			left: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #aaa;
+			font-size: 0.85rem;
+			width: 0.9rem;
+			height: 0.9rem;
+		}
+
+		.search-box {
+			flex: 1 1 260px;
+			max-width: 360px;
+		}
+
+		.search-box input {
+			padding-left: 32px;
+			width: 100%;
+		}
+
+		.filter-select,
+		.filter-input {
+			font-size: 0.875rem;
+			padding: 0.4rem 0.8rem;
+			min-width: 160px;
+		}
+
+		.page-size-select {
+			font-size: 0.875rem;
+			padding: 0.4rem 0.75rem;
+		}
+
+		.sortable {
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.sortable i {
+			font-size: 0.7rem;
+			margin-left: 4px;
+			color: #adb5bd;
+		}
+
+		.sortable.asc i,
+		.sortable.desc i {
+			color: #5b99ea;
+		}
+
+		.no-data {
+			text-align: center;
+			padding: 3rem;
+			color: #adb5bd;
+		}
+
+		.no-data i {
+			font-size: 2.5rem;
+			margin-bottom: 1rem;
+			display: block;
+		}
+
+		.badge-pay {
+			font-size: 0.78rem;
+			padding: 0.35em 0.75em;
+			border-radius: 999px;
+			font-weight: 800;
+		}
+
+		.badge-paid {
+			background: rgba(25, 135, 84, 0.12);
+			color: #198754;
+		}
+
+		.badge-processing {
+			background: rgba(255, 193, 7, 0.18);
+			color: #b78103;
+		}
+
+		.highlight-row {
+			background: rgba(13, 110, 253, 0.06);
+		}
+
+		.empty-cta {
+			border: 1px dashed #e7e9ed;
+			padding: 1.25rem;
+			background: #fff;
+		}
+
+		@media (max-width: 768px) {
+			.table-toolbar {
+				grid-template-columns: 1fr;
+			}
+
+			.search-box {
+				max-width: 100%;
+			}
+
+			.filter-select,
+			.filter-input {
+				min-width: 100%;
+			}
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div>
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
+									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+									title="Notifications">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+										<path fill-rule="evenodd"
+											d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+									</svg>
+									<span class="icon-badge">3</span>
+								</a>
+								<div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
+									<div class="dropdown-menu-header p-3">
+										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
+									</div>
+									<div class="dropdown-menu-content">
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto"><img class="profile-image"
+														src="assets/images/profiles/profile-1.png" alt=""></div>
+												<div class="col">
+													<div class="info">
+														<div class="desc">Nikita Patil shared a file with you.</div>
+														<div class="meta"> 2 hrs ago</div>
+													</div>
+												</div>
+											</div><a class="link-mask" href="notifications.html"></a>
+										</div>
+									</div>
+									<div class="dropdown-menu-footer p-2 text-center"><a href="notifications.html">View
+											all</a></div>
+								</div>
+							</div>
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb mb-1">
+								<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+								<li class="breadcrumb-item active">Payments</li>
+							</ol>
+						</nav>
+						<h1 class="app-page-title mb-1"><i class="fa-solid fa-receipt me-2 text-primary"></i>Payments
+						</h1>
+					</div>
+				</div>
+
+				<div class="tab-content" id="paymentsTabContent">
+					<div class="tab-pane fade show active" id="process-pane" role="tabpanel"
+						aria-labelledby="process-tab" data-roles="super_admin,admin,manager">
+						<div class="app-card shadow-sm mb-4">
+							<div class="app-card-header p-3">
+								<div class="d-flex align-items-center justify-content-between gap-2 flex-wrap">
+									<div class="d-flex align-items-center">
+										<i class="fa-solid fa-money-bill-transfer me-2 text-muted"></i>
+										<h4 class="app-card-title mb-0">Process Payments</h4>
+									</div>
+									<div class="text-muted small">Select user → select earnings → confirm payout</div>
+									<i class="fa-solid fa-table me-2 text-muted"></i>
+									<h4 class="app-card-title mb-0">Payment Transactions</h4>
+								</div>
+								<button class="btn btn-light btn-sm" id="exportCsvBtn" title="Download CSV">
+									<i class="fa-solid fa-file-arrow-down me-2"></i>Export CSV
+								</button>
+							</div>
+						</div>
+						<div class="app-card-body p-3 p-lg-4">
+							<div class="table-toolbar">
+								<div class="d-flex flex-wrap gap-2 align-items-center">
+									<div class="search-box">
+										<i class="fa-solid fa-magnifying-glass"></i>
+										<input type="text" id="searchInput" class="form-control form-control-sm"
+											placeholder="Search Payment ID or Transaction ID...">
+									</div>
+									<select id="statusFilter" class="form-select form-select-sm filter-select">
+										<option value="">All Status</option>
+										<option value="Paid">Paid</option>
+										<option value="Processing">Processing</option>
+									</select>
+									<select id="methodFilter" class="form-select form-select-sm filter-select">
+										<option value="">All Methods</option>
+										<option value="UPI">UPI</option>
+										<option value="Bank">Bank Transfer</option>
+									</select>
+									<input type="date" id="fromDate" class="form-control form-control-sm filter-input"
+										title="From date">
+									<input type="date" id="toDate" class="form-control form-control-sm filter-input"
+										title="To date">
+								</div>
+								<div class="d-flex gap-2 align-items-center">
+									<label class="text-muted small mb-0">Show:</label>
+									<select id="pageSizeSelect" class="form-select form-select-sm page-size-select"
+										style="width:80px;">
+										<option value="10" selected>10</option>
+										<option value="25">25</option>
+										<option value="50">50</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="table-responsive">
+								<table class="table mb-0">
+									<thead class="table-light">
+										<tr>
+											<th>Payment ID</th>
+											<th class="sortable" data-col="date">Date <i class="fa-solid fa-sort"></i>
+											</th>
+											<th class="sortable" data-col="amount">Amount <i
+													class="fa-solid fa-sort"></i>
+											</th>
+											<th>Referrals Covered</th>
+											<th>Status</th>
+											<th>Method</th>
+											<th>Transaction ID</th>
+											<th class="text-end">Action</th>
+										</tr>
+									</thead>
+									<tbody id="tableBody"></tbody>
+								</table>
+								<div id="noDataMsg" class="no-data" style="display:none;">
+									<i class="fa-solid fa-inbox"></i>
+									<div class="empty-cta mx-auto" style="max-width:520px;">
+										<p class="mb-2 fw-semibold">No payments yet</p>
+										<p class="text-muted small mb-0">Payments are processed by admin. Once
+											processed,
+											you will see transaction history here.</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="row align-items-center mt-3">
+								<div class="col-auto">
+									<span class="text-muted small" id="paginationInfo"></span>
+								</div>
+								<div class="col">
+									<nav aria-label="Payments pagination">
+										<ul class="pagination pagination-sm justify-content-end mb-0"
+											id="paginationControls"></ul>
+									</nav>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<footer class="app-footer">
+				<div class="container text-center py-3">
+					<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+							target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+							href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training
+							&amp;
+							Solution Pvt. Ltd.</a></small>
+				</div>
+			</footer>
+		</div>
+
+		<!-- Payment Details Modal -->
+		<div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title"><i class="fa-solid fa-receipt me-2 text-primary"></i>Payment Details
+						</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body p-4">
+						<div class="row g-3">
+							<div class="col-12 col-md-4">
+								<div class="text-muted small">Payment ID</div>
+								<div class="fw-bold" id="dPayId">—</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="text-muted small">Date</div>
+								<div class="fw-bold" id="dDate">—</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="text-muted small">Amount</div>
+								<div class="fw-bold" id="dAmount">—</div>
+							</div>
+							<div class="col-12 col-md-4">
+								<div class="text-muted small">Method</div>
+								<div class="fw-bold" id="dMethod">—</div>
+							</div>
+							<div class="col-12 col-md-8">
+								<div class="text-muted small">Transaction ID</div>
+								<div class="fw-bold" id="dTxn">—</div>
+							</div>
+						</div>
+						<hr class="my-3">
+						<div class="d-flex justify-content-between align-items-center">
+							<div class="fw-semibold">Referral breakdown</div>
+							<div class="text-muted small" id="dCalc">—</div>
+						</div>
+						<div class="table-responsive mt-2">
+							<table class="table table-sm mb-0">
+								<thead class="table-light">
+									<tr>
+										<th>Student</th>
+										<th>Referral ID</th>
+										<th class="text-end">Amount</th>
+									</tr>
+								</thead>
+								<tbody id="dBreakdown"></tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script src="assets/plugins/popper.min.js"></script>
+		<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+		<script src="assets/js/app.js"></script>
+		<script>
+			function inr(n) {
+				if (n == null || n === '') return '₹0';
+				return `₹${Number(n).toLocaleString('en-IN')}`;
+			}
+			function formatDate(d) {
+				if (!d) return '—';
+				const [y, m, dd] = d.split('-');
+				const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+				return `${dd} ${months[+m - 1]} ${y}`;
+			}
+			function badgeStatus(s) {
+				return s === 'Paid'
+					? '<span class="badge-pay badge-paid">Paid</span>'
+					: '<span class="badge-pay badge-processing">Processing</span>';
+			}
+
+			// Sample data (read-only); in real system this comes from admin
+			let payments = [
+				{ id: 'PAY001', date: '2026-03-15', amount: 5000, referrals: ['REF001', 'REF002', 'REF003'], status: 'Paid', method: 'UPI', txn: 'TXN12345', breakdown: [{ id: 'REF001', name: 'Rahul Sharma', amount: 2000 }, { id: 'REF003', name: 'Aman Deshmukh', amount: 1500 }, { id: 'REF002', name: 'Priya Patil', amount: 1500 }] },
+				{ id: 'PAY002', date: '2026-03-22', amount: 3500, referrals: ['REF004', 'REF012'], status: 'Processing', method: 'Bank', txn: 'NEFT99881', breakdown: [{ id: 'REF004', name: 'Sneha Kulkarni', amount: 2000 }, { id: 'REF012', name: 'Akash Bhosale', amount: 1500 }] },
+				{ id: 'PAY003', date: '2026-04-02', amount: 7000, referrals: ['REF015', 'REF006', 'REF013', 'REF014'], status: 'Paid', method: 'UPI', txn: 'TXN88901', breakdown: [{ id: 'REF015', name: 'Komal Wagh', amount: 2000 }, { id: 'REF014', name: 'Tushar Naik', amount: 1500 }, { id: 'REF013', name: 'Deepa Kadam', amount: 1500 }, { id: 'REF006', name: 'Pooja Gupta', amount: 2000 }] },
+			];
+
+			let filtered = [...payments];
+			let sortCol = 'date', sortDir = 'desc';
+			let currentPage = 1;
+			let pageSize = 10;
+
+			function applyFilters() {
+				const q = document.getElementById('searchInput').value.toLowerCase();
+				const st = document.getElementById('statusFilter').value;
+				const me = document.getElementById('methodFilter').value;
+				const from = document.getElementById('fromDate').value;
+				const to = document.getElementById('toDate').value;
+				filtered = payments.filter(p => {
+					const matchQ = !q || p.id.toLowerCase().includes(q) || p.txn.toLowerCase().includes(q);
+					const matchSt = !st || p.status === st;
+					const matchMe = !me || p.method === me;
+					const matchFrom = !from || (p.date && p.date >= from);
+					const matchTo = !to || (p.date && p.date <= to);
+					return matchQ && matchSt && matchMe && matchFrom && matchTo;
+				});
+				currentPage = 1;
+				sortData();
+				renderTable();
+				renderKpis();
+			}
+
+			function sortData() {
+				filtered.sort((a, b) => {
+					const av = a[sortCol];
+					const bv = b[sortCol];
+					if (sortCol === 'amount') return sortDir === 'asc' ? (av - bv) : (bv - av);
+					return sortDir === 'asc' ? String(av || '').localeCompare(String(bv || '')) : String(bv || '').localeCompare(String(av || ''));
+				});
+			}
+
+			function renderTable() {
+				const tbody = document.getElementById('tableBody');
+				const noData = document.getElementById('noDataMsg');
+				const start = (currentPage - 1) * pageSize;
+				const end = start + pageSize;
+				const pageData = filtered.slice(start, end);
+
+				if (filtered.length === 0) { tbody.innerHTML = ''; noData.style.display = 'block'; }
+				else { noData.style.display = 'none'; }
+
+				tbody.innerHTML = pageData.map(p => `
+		<tr class="${p.amount >= 5000 ? 'highlight-row' : ''}">
+			<td class="fw-semibold">${p.id}</td>
+			<td class="text-muted small">${formatDate(p.date)}</td>
+			<td class="fw-bold">${inr(p.amount)}</td>
+			<td>${p.referrals.length} Students</td>
+			<td>${badgeStatus(p.status)}</td>
+			<td>${p.method === 'Bank' ? 'Bank Transfer' : p.method}</td>
+			<td><span class="text-muted small" title="${p.txn}">${p.txn}</span></td>
+			<td class="text-end"><button class="btn btn-light btn-sm" onclick="openDetails('${p.id}')"><i class="fa-solid fa-eye me-1"></i></button></td>
+		</tr>
+	`).join('');
+
+				renderPagination();
+			}
+
+			function renderPagination() {
+				const total = filtered.length;
+				const totalPages = Math.ceil(total / pageSize);
+				const start = Math.min((currentPage - 1) * pageSize + 1, total);
+				const end = Math.min(currentPage * pageSize, total);
+				document.getElementById('paginationInfo').textContent = total === 0 ? 'No records found' : `Showing ${start}–${end} of ${total} payments`;
+
+				const ul = document.getElementById('paginationControls');
+				let html = '';
+				html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="changePage(${currentPage - 1});return false;">Prev</a></li>`;
+				const range = 2;
+				for (let i = 1; i <= totalPages; i++) {
+					if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+						html += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(${i});return false;">${i}</a></li>`;
+					} else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+						html += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
+					}
+				}
+				html += `<li class="page-item ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="changePage(${currentPage + 1});return false;">Next</a></li>`;
+				ul.innerHTML = html;
+			}
+
+			function changePage(p) {
+				const totalPages = Math.ceil(filtered.length / pageSize);
+				if (p < 1 || p > totalPages) return;
+				currentPage = p;
+				renderTable();
+			}
+
+			function renderKpis() {
+				const paid = payments.filter(x => x.status === 'Paid').reduce((s, x) => s + x.amount, 0);
+				const pending = payments.filter(x => x.status === 'Processing').reduce((s, x) => s + x.amount, 0);
+				const tx = payments.length;
+				const lastPaid = payments.filter(x => x.status === 'Paid').sort((a, b) => String(b.date).localeCompare(String(a.date)))[0];
+				document.getElementById('kpiTotalPaid').textContent = inr(paid);
+				document.getElementById('kpiPending').textContent = inr(pending);
+				document.getElementById('kpiTxCount').textContent = `${tx}`;
+				if (lastPaid) {
+					document.getElementById('kpiLastPayment').textContent = inr(lastPaid.amount);
+					document.getElementById('kpiLastPaymentMeta').textContent = `on ${formatDate(lastPaid.date)}`;
+				} else {
+					document.getElementById('kpiLastPayment').textContent = '₹0';
+					document.getElementById('kpiLastPaymentMeta').textContent = '—';
+				}
+			}
+
+			function openDetails(id) {
+				const p = payments.find(x => x.id === id);
+				if (!p) return;
+				document.getElementById('dPayId').textContent = p.id;
+				document.getElementById('dDate').textContent = formatDate(p.date);
+				document.getElementById('dAmount').textContent = inr(p.amount);
+				document.getElementById('dMethod').textContent = p.method === 'Bank' ? 'Bank Transfer' : p.method;
+				document.getElementById('dTxn').textContent = p.txn;
+
+				const bd = document.getElementById('dBreakdown');
+				bd.innerHTML = (p.breakdown || []).map(x => `
+		<tr>
+			<td>${x.name}</td>
+			<td class="text-muted small">${x.id}</td>
+			<td class="text-end fw-semibold">${inr(x.amount)}</td>
+		</tr>
+	`).join('');
+				const sum = (p.breakdown || []).reduce((s, x) => s + x.amount, 0);
+				document.getElementById('dCalc').textContent = `${inr(sum)} total from ${p.referrals.length} referrals`;
+				new bootstrap.Modal(document.getElementById('detailsModal')).show();
+			}
+
+			function exportCsv() {
+				const header = ['Payment ID', 'Date', 'Amount', 'Referrals Covered', 'Status', 'Method', 'Transaction ID'];
+				const lines = [header.join(',')];
+				filtered.forEach(p => {
+					lines.push([p.id, p.date, p.amount, p.referrals.length, p.status, p.method, p.txn].join(','));
+				});
+				const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+				const url = URL.createObjectURL(blob);
+				const a = document.createElement('a');
+				const d = new Date();
+				a.href = url;
+				a.download = `payments_${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}.csv`;
+				document.body.appendChild(a);
+				a.click();
+				a.remove();
+				URL.revokeObjectURL(url);
+			}
+
+			// Controls
+
+			document.getElementById('searchInput').addEventListener('input', applyFilters);
+			document.getElementById('statusFilter').addEventListener('change', applyFilters);
+			document.getElementById('methodFilter').addEventListener('change', applyFilters);
+			document.getElementById('fromDate').addEventListener('change', applyFilters);
+			document.getElementById('toDate').addEventListener('change', applyFilters);
+			document.getElementById('pageSizeSelect').addEventListener('change', function () { pageSize = +this.value; currentPage = 1; renderTable(); });
+			document.getElementById('exportCsvBtn').addEventListener('click', exportCsv);
+
+			// Sort
+
+			document.querySelectorAll('.sortable').forEach(th => {
+				th.addEventListener('click', function () {
+					const col = this.dataset.col;
+					if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+					else { sortCol = col; sortDir = 'asc'; }
+					document.querySelectorAll('.sortable').forEach(t => { t.classList.remove('asc', 'desc'); t.querySelector('i').className = 'fa-solid fa-sort'; });
+					this.classList.add(sortDir);
+					this.querySelector('i').className = sortDir === 'asc' ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+					sortData();
+					renderTable();
+				});
+			});
+
+			// Init
+
+			applyFilters();
+			renderKpis();
+		</script>
+</body>
+
+</html>

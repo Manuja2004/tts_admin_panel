@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Manage Offers | TTS Admin Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Professional Offers Management System">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		/* ── Offers Management Styles ── */
+		.stat-card-premium {
+			border-radius: 12px;
+			border: none;
+			transition: transform 0.2s;
+		}
+
+		.stat-card-premium:hover {
+			transform: translateY(-5px);
+		}
+
+		.status-badge {
+			padding: 0.4em 0.8em;
+			border-radius: 20px;
+			font-weight: 600;
+			font-size: 0.75rem;
+			text-transform: uppercase;
+		}
+
+		.status-active {
+			background: rgba(25, 135, 84, 0.1);
+			color: #198754;
+		}
+
+		.status-expired {
+			background: rgba(220, 53, 69, 0.1);
+			color: #dc3545;
+		}
+
+		.status-inactive {
+			background: rgba(108, 117, 125, 0.1);
+			color: #6c757d;
+		}
+
+		.offer-table img {
+			width: 40px;
+			height: 40px;
+			object-fit: cover;
+			border-radius: 8px;
+		}
+
+		.price-tag {
+			font-weight: 700;
+			color: #2d3748;
+		}
+
+		.old-price {
+			text-decoration: line-through;
+			color: #a0aec0;
+			font-size: 0.85rem;
+		}
+
+		.modal-header-premium {
+			background: #f8f9fa;
+			border-bottom: 1px solid #edf2f7;
+		}
+
+		.form-section-title {
+			font-size: 0.8rem;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #718096;
+			margin-bottom: 1.5rem;
+			margin-top: 1rem;
+			border-bottom: 1px solid #edf2f7;
+			padding-bottom: 0.5rem;
+		}
+
+		.countdown-pill {
+			font-size: 0.7rem;
+			font-weight: 700;
+			background: #fff5f5;
+			color: #c53030;
+			padding: 2px 8px;
+			border-radius: 10px;
+			display: inline-block;
+		}
+
+		.action-btn {
+			width: 32px;
+			height: 32px;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 8px;
+			transition: all 0.2s;
+		}
+
+		.action-btn:hover {
+			transform: scale(1.1);
+		}
+
+		.action-btn i {
+			font-size: 0.85rem;
+		}
+
+		.btn-reset-outline {
+			color: #718096;
+			border: 1px solid #cbd5e0;
+			background: #fff;
+			transition: all 0.3s ease;
+			font-weight: 600;
+		}
+
+		.btn-reset-outline:hover {
+			border-color: #198754;
+			color: #198754;
+			background: rgba(25, 135, 84, 0.05);
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div>
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button">
+									<img src="assets/images/user.png" alt="user profile">
+								</a>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="account.html">Profile Settings</a></li>
+									<li><a class="dropdown-item" href="help.html">Help Center</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col-auto">
+						<h1 class="app-page-title mb-0">Offers Management</h1>
+					</div>
+					<div class="col-auto">
+						<button class="btn btn-primary" onclick="openCreateModal()">
+							<i class="fa-solid fa-plus me-2"></i>Create New Offer
+						</button>
+					</div>
+				</div>
+
+				<!-- Summary Cards -->
+				<div class="row g-4 mb-4">
+					<div class="col-6 col-lg-3">
+						<div class="app-card app-card-stat shadow-sm h-100 border-start border-4 border-primary">
+							<div class="app-card-body p-3 p-lg-4">
+								<h4 class="stats-type mb-1">Total Offers</h4>
+								<div class="stats-figure" id="stat-total">0</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-lg-3">
+						<div class="app-card app-card-stat shadow-sm h-100 border-start border-4 border-success">
+							<div class="app-card-body p-3 p-lg-4">
+								<h4 class="stats-type mb-1">Active</h4>
+								<div class="stats-figure text-success" id="stat-active">0</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-lg-3">
+						<div class="app-card app-card-stat shadow-sm h-100 border-start border-4 border-danger">
+							<div class="app-card-body p-3 p-lg-4">
+								<h4 class="stats-type mb-1">Expired</h4>
+								<div class="stats-figure text-danger" id="stat-expired">0</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-lg-3">
+						<div class="app-card app-card-stat shadow-sm h-100 border-start border-4 border-info">
+							<div class="app-card-body p-3 p-lg-4">
+								<h4 class="stats-type mb-1">Conversions</h4>
+								<div class="stats-figure text-info" id="stat-conversions">42</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Filters -->
+				<div class="app-card app-card-orders-table shadow-sm mb-5">
+					<div class="app-card-body p-3">
+						<div class="row g-3 align-items-center">
+							<div class="col-12 col-md-4">
+								<input type="text" id="offerSearch" class="form-control"
+									placeholder="Search by title or course..." onkeyup="filterData()">
+							</div>
+							<div class="col-12 col-md-3">
+								<select class="form-select" id="filterCategory" onchange="filterData()">
+									<option value="all">All Categories</option>
+									<option value="course">Course Deals</option>
+									<option value="referral">Referral Bonus</option>
+									<option value="placement">Placement Deals</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-3">
+								<select class="form-select" id="filterStatus" onchange="filterData()">
+									<option value="all">All Status</option>
+									<option value="Active">Active</option>
+									<option value="Expired">Expired</option>
+									<option value="Inactive">Inactive</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-2 text-md-end">
+								<button class="btn btn-reset-outline w-100" onclick="resetFilters()">Reset</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Offers Table -->
+				<div class="app-card app-card-orders-table shadow-sm mb-5">
+					<div class="app-card-body">
+						<div class="table-responsive">
+							<table class="table app-table-hover mb-0 text-left offer-table">
+								<thead>
+									<tr>
+										<th class="cell">Offer ID</th>
+										<th class="cell">Title & Course</th>
+										<th class="cell">Pricing</th>
+										<th class="cell">Comm.</th>
+										<th class="cell">Validity</th>
+										<th class="cell">Seats</th>
+										<th class="cell">Status</th>
+										<th class="cell text-end">Actions</th>
+									</tr>
+								</thead>
+								<tbody id="offersTableBody">
+									<!-- Dynamic Rows -->
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal: Create / Edit Offer -->
+	<div class="modal fade" id="offerModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header modal-header-premium">
+					<h5 class="modal-title fw-bold" id="modalTitle">Create New Offer</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<form id="offerForm">
+					<input type="hidden" id="offerId">
+					<div class="modal-body p-4">
+
+						<div class="form-section-title">General Information</div>
+						<div class="row g-3 mb-4">
+							<div class="col-md-12">
+								<label class="form-label fw-bold small">Offer Title</label>
+								<input type="text" class="form-control" id="formTitle"
+									placeholder="e.g. Early Bird Summer Deal" required>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label fw-bold small">Category</label>
+								<select class="form-select" id="formCategory" required>
+									<option value="course">Course Deal</option>
+									<option value="referral">Referral Bonus</option>
+									<option value="placement">Placement Deal</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label fw-bold small">Linked Course</label>
+								<select class="form-select" id="formCourse" required>
+									<option value="Java Full Stack">Java Full Stack</option>
+									<option value="Python Data Science">Python Data Science</option>
+									<option value="UI/UX Mastery">UI/UX Mastery</option>
+									<option value="Digital Marketing">Digital Marketing</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-section-title">Pricing & Commission</div>
+						<div class="row g-3 mb-4">
+							<div class="col-md-4">
+								<label class="form-label fw-bold small">Original Price (₹)</label>
+								<input type="number" class="form-control" id="formOrgPrice"
+									oninput="calculateDiscounted()" required>
+							</div>
+							<div class="col-md-4">
+								<label class="form-label fw-bold small">Discount (%)</label>
+								<input type="number" class="form-control" id="formDiscPercent"
+									oninput="calculateDiscounted()" required>
+							</div>
+							<div class="col-md-4">
+								<label class="form-label fw-bold small">Discounted Price (₹)</label>
+								<input type="number" class="form-control bg-light" id="formDiscPrice" readonly>
+							</div>
+							<div class="col-md-4">
+								<label class="form-label fw-bold small">Commission (%)</label>
+								<input type="number" class="form-control" id="formComm" required>
+							</div>
+							<div class="col-md-4">
+								<label class="form-label fw-bold small">Total Seats</label>
+								<input type="number" class="form-control" id="formSeats" required>
+							</div>
+						</div>
+
+						<div class="form-section-title">Validity & Status</div>
+						<div class="row g-3 mb-4">
+							<div class="col-md-6">
+								<label class="form-label fw-bold small">Start Date</label>
+								<input type="date" class="form-control" id="formStart" required>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label fw-bold small">End Date</label>
+								<input type="date" class="form-control" id="formEnd" required>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label fw-bold small">Status</label>
+								<select class="form-select" id="formStatus">
+									<option value="Active">Active</option>
+									<option value="Inactive">Inactive</option>
+								</select>
+							</div>
+							<div class="col-md-6">
+								<label class="form-label fw-bold small">Tags (comma separated)</label>
+								<input type="text" class="form-control" id="formTags" placeholder="Trending, Featured">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer bg-light">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-primary" id="saveBtn">Save Offer</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal: View Details -->
+	<div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content border-0 shadow-lg">
+				<div class="modal-body p-0">
+					<div class="p-4 bg-primary text-white text-center rounded-top">
+						<i class="fa-solid fa-gift fa-3x mb-3"></i>
+						<h4 class="fw-bold mb-1" id="vTitle">Offer Title</h4>
+						<div class="badge bg-white text-primary" id="vID">OFF-001</div>
+					</div>
+					<div class="p-4">
+						<div class="row g-4 mb-4">
+							<div class="col-6">
+								<div class="text-muted tiny text-uppercase fw-bold">Price Point</div>
+								<div class="h5 price-tag mb-0">₹<span id="vPrice">0</span></div>
+								<div class="old-price">₹<span id="vOrg">0</span></div>
+							</div>
+							<div class="col-6 text-end">
+								<div class="text-muted tiny text-uppercase fw-bold">Commission</div>
+								<div class="h5 text-success fw-bold mb-0"><span id="vComm">0</span>%</div>
+							</div>
+						</div>
+						<div class="border-top pt-3 mb-4">
+							<div class="d-flex justify-content-between mb-2">
+								<span class="text-muted">Linked Course:</span>
+								<span class="fw-bold" id="vCourse">-</span>
+							</div>
+							<div class="d-flex justify-content-between mb-2">
+								<span class="text-muted">Seats Available:</span>
+								<span class="fw-bold" id="vSeats">-</span>
+							</div>
+							<div class="d-flex justify-content-between mb-2">
+								<span class="text-muted">Ends On:</span>
+								<span class="fw-bold" id="vEnd">-</span>
+							</div>
+						</div>
+						<button class="btn btn-primary w-100" data-bs-dismiss="modal">Close Preview</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+		</div><!--//app-content-->
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<!-- Design by Technokraft Services LLP -->
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+						href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &
+						Solution Pvt. Ltd.</a></small>
+			</div>
+		</footer><!--//app-footer-->
+	</div><!--//app-wrapper-->
+
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/app.js"></script>
+
+
+	<script>
+		// --- DATABASE (Mock with LocalStorage for Persistence) ---
+		let OFFERS_DB = JSON.parse(localStorage.getItem('TTS_OFFERS')) || [
+			{
+				id: "OFF-2041",
+				title: "Summer Flash Sale",
+				course: "Java Full Stack",
+				category: "course",
+				originalPrice: 45000,
+				discountedPrice: 32000,
+				discountPercent: 28,
+				commission: 10,
+				start: "2024-03-01",
+				end: "2026-04-15",
+				seats: 50,
+				enrolled: 42,
+				status: "Active",
+				tags: ["Trending"]
+			},
+			{
+				id: "OFF-2042",
+				title: "Referral Bonus Extra",
+				course: "Python Data Science",
+				category: "referral",
+				originalPrice: 55000,
+				discountedPrice: 50000,
+				discountPercent: 10,
+				commission: 15,
+				start: "2024-01-01",
+				end: "2024-12-31",
+				seats: 100,
+				enrolled: 100,
+				status: "Expired",
+				tags: ["Hot"]
+			}
+		];
+
+		const saveToDB = () => localStorage.setItem('TTS_OFFERS', JSON.stringify(OFFERS_DB));
+
+		// --- INIT ---
+		window.onload = () => {
+			renderTable();
+			updateStats();
+		};
+
+		// --- CRUD OPERATIONS ---
+		const renderTable = (data = OFFERS_DB) => {
+			const tbody = document.getElementById('offersTableBody');
+			const now = new Date();
+
+			tbody.innerHTML = data.map(o => {
+				const isExpired = new Date(o.end) < now;
+				const currentStatus = isExpired ? 'Expired' : o.status;
+				const statusClass = currentStatus.toLowerCase();
+				const seatsLeft = o.seats - o.enrolled;
+
+				return `
+					<tr>
+						<td class="cell"><span class="fw-bold text-primary">${o.id}</span></td>
+						<td class="cell">
+							<div class="fw-bold">${o.title}</div>
+							<div class="text-muted small">${o.course}</div>
+						</td>
+						<td class="cell">
+							<div class="price-tag">₹${o.discountedPrice.toLocaleString()}</div>
+							<div class="old-price">₹${o.originalPrice.toLocaleString()}</div>
+						</td>
+						<td class="cell text-success fw-bold">${o.commission}%</td>
+						<td class="cell">
+							<div class="small fw-bold">${o.end}</div>
+							${!isExpired ? `<div class="countdown-pill mt-1">⏳ Ends Soon</div>` : ''}
+						</td>
+						<td class="cell">
+							<span class="${seatsLeft < 5 ? 'text-danger fw-bold' : ''}">${seatsLeft}/${o.seats}</span>
+						</td>
+						<td class="cell"><span class="status-badge status-${statusClass}">${currentStatus}</span></td>
+						<td class="cell text-end">
+							<div class="d-flex justify-content-end gap-2">
+								<button class="btn btn-sm btn-outline-primary action-btn" onclick="viewOffer('${o.id}')" title="View Details">
+									<i class="fa-solid fa-eye"></i>
+								</button>
+								<button class="btn btn-sm btn-outline-info action-btn" onclick="editOffer('${o.id}')" title="Edit Offer">
+									<i class="fa-solid fa-pen-to-square"></i>
+								</button>
+								<button class="btn btn-sm btn-outline-success action-btn" onclick="toggleStatus('${o.id}')" title="Toggle Status">
+									<i class="fa-solid fa-toggle-on"></i>
+								</button>
+								<button class="btn btn-sm btn-outline-danger action-btn" onclick="deleteOffer('${o.id}')" title="Delete Offer">
+									<i class="fa-solid fa-trash"></i>
+								</button>
+							</div>
+						</td>
+					</tr>
+				`;
+			}).join('');
+
+			if (data.length === 0) {
+				tbody.innerHTML = `<tr><td colspan="8" class="text-center py-5 text-muted">No offers matching your search.</td></tr>`;
+			}
+		};
+
+		const updateStats = () => {
+			const now = new Date();
+			document.getElementById('stat-total').innerText = OFFERS_DB.length;
+			document.getElementById('stat-active').innerText = OFFERS_DB.filter(o => o.status === 'Active' && new Date(o.end) > now).length;
+			document.getElementById('stat-expired').innerText = OFFERS_DB.filter(o => new Date(o.end) < now).length;
+		};
+
+		// --- FORMS & MODALS ---
+		const openCreateModal = () => {
+			document.getElementById('offerForm').reset();
+			document.getElementById('offerId').value = '';
+			document.getElementById('modalTitle').innerText = 'Create New Offer';
+			new bootstrap.Modal(document.getElementById('offerModal')).show();
+		};
+
+		const calculateDiscounted = () => {
+			const org = parseFloat(document.getElementById('formOrgPrice').value) || 0;
+			const p = parseFloat(document.getElementById('formDiscPercent').value) || 0;
+			document.getElementById('formDiscPrice').value = Math.round(org - (org * (p / 100)));
+		};
+
+		document.getElementById('offerForm').onsubmit = (e) => {
+			e.preventDefault();
+			const id = document.getElementById('offerId').value;
+			const newOffer = {
+				id: id || `OFF-${Math.floor(1000 + Math.random() * 9000)}`,
+				title: document.getElementById('formTitle').value,
+				course: document.getElementById('formCourse').value,
+				category: document.getElementById('formCategory').value,
+				originalPrice: parseInt(document.getElementById('formOrgPrice').value),
+				discountedPrice: parseInt(document.getElementById('formDiscPrice').value),
+				discountPercent: parseInt(document.getElementById('formDiscPercent').value),
+				commission: parseInt(document.getElementById('formComm').value),
+				start: document.getElementById('formStart').value,
+				end: document.getElementById('formEnd').value,
+				seats: parseInt(document.getElementById('formSeats').value),
+				enrolled: id ? OFFERS_DB.find(o => o.id === id).enrolled : 0,
+				status: document.getElementById('formStatus').value,
+				tags: document.getElementById('formTags').value.split(',').map(t => t.trim())
+			};
+
+			if (id) {
+				const idx = OFFERS_DB.findIndex(o => o.id === id);
+				OFFERS_DB[idx] = newOffer;
+			} else {
+				OFFERS_DB.unshift(newOffer);
+			}
+
+			saveToDB();
+			bootstrap.Modal.getInstance(document.getElementById('offerModal')).hide();
+			renderTable();
+			updateStats();
+		};
+
+		// --- ACTIONS ---
+		const viewOffer = (id) => {
+			const o = OFFERS_DB.find(x => x.id === id);
+			document.getElementById('vTitle').innerText = o.title;
+			document.getElementById('vID').innerText = o.id;
+			document.getElementById('vPrice').innerText = o.discountedPrice.toLocaleString();
+			document.getElementById('vOrg').innerText = o.originalPrice.toLocaleString();
+			document.getElementById('vComm').innerText = o.commission;
+			document.getElementById('vCourse').innerText = o.course;
+			document.getElementById('vSeats').innerText = `${o.enrolled}/${o.seats}`;
+			document.getElementById('vEnd').innerText = o.end;
+			new bootstrap.Modal(document.getElementById('detailsModal')).show();
+		};
+
+		const editOffer = (id) => {
+			const o = OFFERS_DB.find(x => x.id === id);
+			document.getElementById('offerId').value = o.id;
+			document.getElementById('formTitle').value = o.title;
+			document.getElementById('formCourse').value = o.course;
+			document.getElementById('formCategory').value = o.category;
+			document.getElementById('formOrgPrice').value = o.originalPrice;
+			document.getElementById('formDiscPercent').value = o.discountPercent;
+			document.getElementById('formDiscPrice').value = o.discountedPrice;
+			document.getElementById('formComm').value = o.commission;
+			document.getElementById('formStart').value = o.start;
+			document.getElementById('formEnd').value = o.end;
+			document.getElementById('formSeats').value = o.seats;
+			document.getElementById('formStatus').value = o.status;
+			document.getElementById('formTags').value = o.tags.join(', ');
+
+			document.getElementById('modalTitle').innerText = 'Edit Offer';
+			new bootstrap.Modal(document.getElementById('offerModal')).show();
+		};
+
+		const deleteOffer = (id) => {
+			if (confirm('Are you sure you want to delete this offer permanently?')) {
+				OFFERS_DB = OFFERS_DB.filter(o => o.id !== id);
+				saveToDB();
+				renderTable();
+				updateStats();
+			}
+		};
+
+		const toggleStatus = (id) => {
+			const o = OFFERS_DB.find(x => x.id === id);
+			o.status = o.status === 'Active' ? 'Inactive' : 'Active';
+			saveToDB();
+			renderTable();
+			updateStats();
+		};
+
+		// --- FILTERING ---
+		const filterData = () => {
+			const search = document.getElementById('offerSearch').value.toLowerCase();
+			const cat = document.getElementById('filterCategory').value;
+			const stat = document.getElementById('filterStatus').value;
+			const now = new Date();
+
+			const filtered = OFFERS_DB.filter(o => {
+				const matchesSearch = o.title.toLowerCase().includes(search) || o.course.toLowerCase().includes(search);
+				const matchesCat = cat === 'all' || o.category === cat;
+
+				let matchesStat = true;
+				if (stat !== 'all') {
+					const isExpired = new Date(o.end) < now;
+					const finalStatus = isExpired ? 'Expired' : o.status;
+					matchesStat = finalStatus === stat;
+				}
+
+				return matchesSearch && matchesCat && matchesStat;
+			});
+
+			renderTable(filtered);
+		};
+
+		const resetFilters = () => {
+			document.getElementById('offerSearch').value = '';
+			document.getElementById('filterCategory').value = 'all';
+			document.getElementById('filterStatus').value = 'all';
+			renderTable();
+		};
+	</script>
+</body>
+
+</html>

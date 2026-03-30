@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>My Referrals | TTS College Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="TTS Referral Management - My Referrals">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		.referral-table thead th {
+			font-weight: 600;
+			font-size: 0.82rem;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			color: #5d6778;
+			white-space: nowrap;
+			vertical-align: middle;
+		}
+
+		.referral-table tbody td {
+			vertical-align: middle;
+			font-size: 0.92rem;
+		}
+
+		.referral-table tbody tr:hover {
+			background: #f1f3f5;
+		}
+
+		.badge-status {
+			font-size: 0.78rem;
+			padding: 0.35em 0.75em;
+			border-radius: 20px;
+			font-weight: 600;
+		}
+
+		.badge-new {
+			background: #e3f0fb;
+			color: #1976d2;
+		}
+
+		.badge-contacted {
+			background: #fff8e1;
+			color: #f57c00;
+		}
+
+		.badge-interested {
+			background: #e8f5e9;
+			color: #2e7d32;
+		}
+
+		.badge-not-interested {
+			background: #fce4ec;
+			color: #c62828;
+		}
+
+		.badge-converted {
+			background: #e0f2f1;
+			color: #00695c;
+		}
+
+		.action-btns .btn {
+			padding: 0.25rem 0.55rem;
+			font-size: 0.8rem;
+			border-radius: 8px;
+			margin: 0 2px;
+			border-color: #e7e9ed;
+			background: transparent;
+		}
+
+		.action-btns .btn:hover,
+		.action-btns .btn:focus {
+			background: #f1f3f5;
+			border-color: #e7e9ed;
+			color: inherit;
+			box-shadow: none;
+		}
+
+		.action-btns .btn:disabled {
+			opacity: 0.55;
+			pointer-events: auto;
+		}
+
+		.table-toolbar {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 0.5rem 0.75rem;
+			align-items: center;
+			margin-bottom: 0.75rem;
+		}
+
+		.search-box {
+			position: relative;
+		}
+
+		.search-box i,
+		.search-box svg {
+			position: absolute;
+			left: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: #aaa;
+			font-size: 0.85rem;
+			width: 0.9rem;
+			height: 0.9rem;
+		}
+
+		.search-box {
+			flex: 1 1 260px;
+			max-width: 320px;
+		}
+
+		.search-box input {
+			padding-left: 32px;
+			border-radius: 8px;
+			width: 100%;
+		}
+
+		.filter-select {
+			border-radius: 8px;
+			font-size: 0.875rem;
+			padding: 0.4rem 0.8rem;
+			min-width: 160px;
+		}
+
+		.page-size-select {
+			border-radius: 8px;
+			font-size: 0.875rem;
+			padding: 0.4rem 0.75rem;
+		}
+
+		.pagination-info {
+			font-size: 0.85rem;
+			color: #6c757d;
+		}
+
+		.sortable {
+			cursor: pointer;
+			user-select: none;
+		}
+
+		.sortable i {
+			font-size: 0.7rem;
+			margin-left: 4px;
+			color: #adb5bd;
+		}
+
+		.sortable.asc i {
+			color: #5b99ea;
+		}
+
+		.sortable.desc i {
+			color: #5b99ea;
+		}
+
+		.no-data {
+			text-align: center;
+			padding: 3rem;
+			color: #adb5bd;
+		}
+
+		.no-data i {
+			font-size: 2.5rem;
+			margin-bottom: 1rem;
+			display: block;
+		}
+
+		.btn-add-referral {
+			border-radius: 8px;
+			font-weight: 600;
+			padding: 0.5rem 1.25rem;
+		}
+
+		.breadcrumb-item a {
+			text-decoration: none;
+			color: #5d6778;
+		}
+
+		.highlight {
+			background: #fff9c4;
+		}
+
+		.modal-header {
+			border-bottom: 1px solid #e7e9ed;
+		}
+
+		.modal-footer {
+			border-top: 1px solid #e7e9ed;
+		}
+
+		.view-field-label {
+			font-size: 0.8rem;
+			color: #5d6778;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.04em;
+			margin-bottom: 2px;
+		}
+
+		.view-field-value {
+			font-size: 0.95rem;
+			color: #252930;
+			margin-bottom: 1rem;
+		}
+
+		.toast-container {
+			z-index: 1060;
+		}
+
+		@media (max-width: 768px) {
+			.table-toolbar {
+				grid-template-columns: 1fr;
+			}
+
+			.search-box {
+				max-width: 100%;
+			}
+
+			.action-btns {
+				display: flex;
+				flex-wrap: nowrap;
+			}
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div><!--//col-->
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div><!--//app-search-box-->
+
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
+									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+									title="Notifications">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+										<path fill-rule="evenodd"
+											d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+									</svg>
+									<span class="icon-badge">3</span>
+								</a><!--//dropdown-toggle-->
+
+								<div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
+									<div class="dropdown-menu-header p-3">
+										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
+									</div><!--//dropdown-menu-title-->
+									<div class="dropdown-menu-content">
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<img class="profile-image"
+														src="assets/images/profiles/profile-1.png" alt="">
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">Nikita Patil shared a file with you. </div>
+														<div class="meta"> 2 hrs ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<div class="app-icon-holder">
+														<svg width="1em" height="1em" viewBox="0 0 16 16"
+															class="bi bi-receipt" fill="currentColor"
+															xmlns="http://www.w3.org/2000/svg">
+															<path fill-rule="evenodd"
+																d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647l.646-.646a.5.5 0 0 1 .708 0l.646.646l.646-.646a.5.5 0 0 1 .708 0l.646.646l.646-.646a.5.5 0 0 1 .708 0l.646.646l.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
+															<path fill-rule="evenodd"
+																d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
+														</svg>
+													</div>
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">You have a new invoice. Proin venenatis
+															interdum est.</div>
+														<div class="meta"> 1 day ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<div class="app-icon-holder icon-holder-mono">
+														<svg width="1em" height="1em" viewBox="0 0 16 16"
+															class="bi bi-bar-chart-line" fill="currentColor"
+															xmlns="http://www.w3.org/2000/svg">
+															<path fill-rule="evenodd"
+																d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
+														</svg>
+													</div>
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">Your report is ready. Proin venenatis interdum
+															est.</div>
+														<div class="meta"> 3 days ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<img class="profile-image"
+														src="assets/images/profiles/profile-2.png" alt="">
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">Kunal Patil sent you a new message.</div>
+														<div class="meta"> 7 days ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+									</div><!--//dropdown-menu-content-->
+
+									<div class="dropdown-menu-footer p-2 text-center">
+										<a href="notifications.html">View all</a>
+									</div>
+
+								</div><!--//dropdown-menu-->
+							</div><!--//app-utility-item-->
+
+
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div><!--//app-user-dropdown-->
+						</div><!--//app-utilities-->
+					</div><!--//row-->
+				</div><!--//app-header-content-->
+			</div><!--//container-fluid-->
+		</div><!--//app-header-inner-->
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle active" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="true"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu show"
+								data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link active"
+											href="followups.html">Follow-Ups</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-documents" aria-expanded="false"
+								aria-controls="submenu-documents">
+								<span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>
+								<span class="nav-link-text">Documents</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-documents" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="document-manager.html">All
+											Documents</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="upload-document.html">Upload
+											Document</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="#">Commission Settings</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="#">Create Offers</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="offers.html">Manage
+											Offers</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-courses" aria-expanded="false" aria-controls="submenu-courses">
+								<span class="nav-icon"><i class="fa-solid fa-book-open"></i></span>
+								<span class="nav-link-text">Courses</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-courses" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">All Courses</a>
+									</li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="#">Add / Edit Course</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="#">Employee Master</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="#">Role &amp; Permission
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="#">Course Master</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="#">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="#">System Settings</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="#">Role Permissions</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</nav>
+				<div id="app-sidepanel" class="app-sidepanel">
+					<div id="sidepanel-drop" class="sidepanel-drop"></div>
+					<div class="sidepanel-inner d-flex flex-column">
+						<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+						<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+							<div class="d-flex align-items-center">
+								<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+									style="width: 40px; height: 40px;">
+								<div class="user-details">
+									<div class="user-name fw-bold small">Kunal Patil</div>
+									<div class="user-role text-muted" id="current-user-role"
+										style="font-size: 0.75rem;">
+										Referral Partner</div>
+								</div>
+							</div>
+							<a href="account.html"
+								class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+								Profile</a>
+						</div><!--//app-user-info-->
+
+						<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+							<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+								<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+								<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+									<a class="nav-link active" href="index.html">
+										<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+										<span class="nav-link-text">Dashboard</span>
+									</a>
+								</li>
+
+								<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-user-management" aria-expanded="false"
+										aria-controls="submenu-user-management">
+										<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+										<span class="nav-link-text">User Management</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-user-management" class="collapse submenu"
+										data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link"
+													href="admins.html">Admins</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="counselors.html">Counselors</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="referral-partners.html">Referral Partners</a></li>
+										</ul>
+									</div>
+								</li>
+
+
+								<li class="nav-item has-submenu">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-lead-management" aria-expanded="false"
+										aria-controls="submenu-lead-management">
+										<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+										<span class="nav-link-text">Lead Management</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-lead-management" class="collapse submenu"
+										data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link" href="leads.html">All
+													Leads</a>
+											</li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="assigned-leads.html">Assigned
+													Leads</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="followups.html">Follow-Ups</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="followup-calendar.html">Calendar Scheduler</a></li>
+										</ul>
+									</div>
+								</li>
+
+								<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-conversions" aria-expanded="false"
+										aria-controls="submenu-conversions">
+										<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+										<span class="nav-link-text">Conversions</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-conversions" class="collapse submenu"
+										data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link"
+													href="conversions.html">Converted
+													Students</a>
+											</li>
+										</ul>
+									</div>
+								</li>
+
+								<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+								<li class="nav-item has-submenu"
+									data-roles="super_admin,admin,manager,referral_partner">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-earnings" aria-expanded="false"
+										aria-controls="submenu-earnings">
+										<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+										<span class="nav-link-text">Earnings</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-earnings" class="collapse submenu"
+										data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link"
+													href="earnings.html">Earnings
+													Overview</a></li>
+										</ul>
+									</div>
+								</li>
+
+								<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-payments" aria-expanded="false"
+										aria-controls="submenu-payments">
+										<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+										<span class="nav-link-text">Payments</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-payments" class="collapse submenu"
+										data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link"
+													href="process-payments.html">Process Payments</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="payment-history.html">Payment
+													History</a></li>
+										</ul>
+									</div>
+								</li>
+
+								<li class="nav-item has-submenu"
+									data-roles="super_admin,admin,manager,referral_partner">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-offers" aria-expanded="false"
+										aria-controls="submenu-offers">
+										<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+										<span class="nav-link-text">Offers</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+													class="submenu-link" href="offers.html">Create Offers</a></li>
+											<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+													class="submenu-link" href="comm-templates.html">Message
+													Templates</a></li>
+											<li class="submenu-item" data-roles="referral_partner"><a
+													class="submenu-link" href="partner-onboarding.html">Partner
+													Guide</a></li>
+										</ul>
+									</div>
+								</li>
+
+								<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+									data-roles="super_admin,admin,manager">ADMIN</li>
+
+								<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-masters" aria-expanded="false"
+										aria-controls="submenu-masters">
+										<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+										<span class="nav-link-text">Masters</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link"
+													href="roles-permissions.html">Role & Permission Master</a>
+											</li>
+											<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+													Master</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="commission-master.html">Commission Master</a></li>
+										</ul>
+									</div>
+								</li>
+
+								<li class="nav-item has-submenu"
+									data-roles="super_admin,admin,manager,counselor,referral_partner">
+									<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+										data-bs-target="#submenu-settings" aria-expanded="false"
+										aria-controls="submenu-settings">
+										<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+										<span class="nav-link-text">Settings</span>
+										<span class="submenu-arrow"><i
+												class="fa-solid fa-chevron-down small"></i></span>
+									</a>
+									<div id="submenu-settings" class="collapse submenu"
+										data-bs-parent="#menu-accordion">
+										<ul class="submenu-list list-unstyled">
+											<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+													Settings</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="system-settings.html">System Settings</a></li>
+											<li class="submenu-item"><a class="submenu-link"
+													href="audit-logs.html">Audit Trails</a></li>
+										</ul>
+									</div>
+								</li>
+
+							</ul><!--//app-menu-->
+						</nav><!--//app-nav-->
+
+						<div class="app-sidepanel-footer border-top pt-2">
+							<nav class="app-nav app-nav-footer">
+								<ul class="app-menu footer-menu list-unstyled">
+									<li class="nav-item">
+										<a class="nav-link" href="#"
+											onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+											<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+											<span class="nav-link-text">Logout</span>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div><!--//app-sidepanel-footer-->
+
+
+					</div><!--//sidepanel-inner-->
+				</div><!--//app-sidepanel-->
+			</div>
+		</div>
+	</header>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+
+				<!-- Page Header -->
+				<div class="row g-3 mb-4 align-items-center justify-content-between">
+					<div class="col-auto">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb mb-1">
+								<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+								<li class="breadcrumb-item active">Leads Management</li>
+							</ol>
+						</nav>
+						<h1 class="app-page-title mb-0"><i class="fa-solid fa-inbox me-2 text-primary"></i>Leads
+						</h1>
+					</div>
+					<div class="col-auto">
+						<a class="btn app-btn-primary btn-add-referral" href="add-referral.html">
+							<i class="fa-solid fa-plus me-2"></i>Add Lead
+						</a>
+					</div>
+				</div>
+
+				<!-- Summary Cards -->
+				<div class="row g-3 mb-4">
+					<div class="col-6 col-md-3">
+						<div class="app-card app-card-stat shadow-sm h-100">
+							<div class="app-card-body p-3">
+								<h4 class="stats-type mb-1">Total Leads</h4>
+								<div class="stats-figure stats-blue" id="stat-total">15</div>
+								<div class="stats-meta text-muted"><i class="fa-solid fa-layer-group me-1"></i>All Leads
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="app-card app-card-stat shadow-sm h-100">
+							<div class="app-card-body p-3">
+								<h4 class="stats-type mb-1">New Leads</h4>
+								<div class="stats-figure" id="stat-new">4</div>
+								<div class="stats-meta text-muted"><i class="fa-solid fa-sparkles me-1"></i>Fresh
+									Entries
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="app-card app-card-stat shadow-sm h-100">
+							<div class="app-card-body p-3">
+								<h4 class="stats-type mb-1">Follow-ups Today</h4>
+								<div class="stats-figure stats-orange" id="stat-followups">8</div>
+								<div class="stats-meta text-muted"><i class="fa-solid fa-calendar-check me-1"></i>Due
+									Today
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="app-card app-card-stat shadow-sm h-100">
+							<div class="app-card-body p-3">
+								<h4 class="stats-type mb-1">Converted Leads</h4>
+								<div class="stats-figure stats-green" id="stat-converted">3</div>
+								<div class="stats-meta text-muted"><i
+										class="fa-solid fa-circle-check me-1"></i>Admissions
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Main Table Card -->
+				<div class="app-card shadow-sm mb-5">
+					<div class="app-card-header p-3">
+						<div class="d-flex align-items-center">
+							<i class="fa-solid fa-table-list me-2 text-muted"></i>
+							<h4 class="app-card-title mb-0">Leads Pipeline</h4>
+						</div>
+					</div>
+					<div class="app-card-body p-3 p-lg-4">
+
+						<!-- Toolbar -->
+						<div class="table-toolbar">
+							<div class="d-flex flex-wrap gap-2 align-items-center">
+								<!-- Search -->
+								<div class="search-box">
+									<i class="fa-solid fa-magnifying-glass"></i>
+									<input type="text" id="searchInput" class="form-control form-control-sm"
+										placeholder="Search name, phone, course...">
+								</div>
+								<!-- Status Filter -->
+								<select id="statusFilter" class="form-select form-select-sm filter-select">
+									<option value="">All Status</option>
+									<option value="NEW">New</option>
+									<option value="CONTACTED">Contacted</option>
+									<option value="INTERESTED">Interested</option>
+									<option value="FOLLOW_UP">Follow-up</option>
+									<option value="CONVERTED">Converted</option>
+									<option value="DROPPED">Dropped</option>
+								</select>
+								<!-- Counselor Filter -->
+								<select id="counselorFilter" class="form-select form-select-sm filter-select"
+									data-roles="super_admin,admin,manager">
+									<option value="">All Counselors</option>
+									<option value="Unassigned">Unassigned</option>
+									<option value="Counselor A">Counselor A</option>
+									<option value="Counselor B">Counselor B</option>
+								</select>
+								<!-- Course Filter -->
+								<select id="courseFilter" class="form-select form-select-sm filter-select">
+									<option value="">All Courses</option>
+									<option value="Java Full Stack">Java Full Stack</option>
+									<option value="Python Development">Python Development</option>
+									<option value="Data Science">Data Science</option>
+									<option value="Web Development">Web Development</option>
+								</select>
+								<!-- Batch Filter -->
+								<select id="batchFilter" class="form-select form-select-sm filter-select">
+									<option value="">All Batches</option>
+									<option value="Morning">Morning</option>
+									<option value="Evening">Evening</option>
+									<option value="Weekend">Weekend</option>
+								</select>
+							</div>
+							<div class="d-flex gap-2 align-items-center">
+								<label class="text-muted small mb-0">Show:</label>
+								<select id="pageSizeSelect" class="form-select form-select-sm page-size-select"
+									style="width:80px;">
+									<option value="25" selected>25</option>
+									<option value="50">50</option>
+									<option value="100">100</option>
+								</select>
+							</div>
+						</div>
+
+						<!-- Table -->
+						<div class="table-responsive">
+							<table class="table referral-table mb-0">
+								<thead class="table-light">
+									<tr>
+										<th class="sortable" data-col="id">Lead ID <i class="fa-solid fa-sort"></i></th>
+										<th class="sortable" data-col="name">Student Name <i
+												class="fa-solid fa-sort"></i></th>
+										<th class="sortable" data-col="phone">Phone <i class="fa-solid fa-sort"></i>
+										</th>
+										<th class="sortable" data-col="course">Course <i class="fa-solid fa-sort"></i>
+										</th>
+										<th>Referred By</th>
+										<th class="sortable" data-col="status">Status <i class="fa-solid fa-sort"></i>
+										</th>
+										<th>Counselor</th>
+										<th class="sortable" data-col="nextFollowup">Next Follow-up <i
+												class="fa-solid fa-sort"></i></th>
+										<th class="text-center">Actions</th>
+									</tr>
+								</thead>
+								<tbody id="referralTableBody"></tbody>
+							</table>
+							<div id="noDataMsg" class="no-data" style="display:none;">
+								<i class="fa-solid fa-inbox"></i>
+								<p class="mb-0">No leads found matching your criteria.</p>
+							</div>
+						</div>
+
+						<!-- Pagination Footer -->
+						<div class="row align-items-center mt-3">
+							<div class="col-auto">
+								<span class="pagination-info" id="paginationInfo"></span>
+							</div>
+							<div class="col">
+								<nav aria-label="Referrals pagination">
+									<ul class="pagination pagination-sm justify-content-end mb-0"
+										id="paginationControls"></ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<!-- Design by Technokraft Services LLP -->
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+						href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &
+						Solution Pvt. Ltd.</a></small>
+
+
+			</div>
+		</footer><!--//app-footer-->
+	</div>
+
+	<!-- View Modal -->
+	<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="viewModalLabel"><i
+							class="fa-solid fa-eye me-2 text-primary"></i>Referral Details</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body p-4">
+					<div class="row g-3">
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Student Name</div>
+							<div class="view-field-value fw-semibold" id="view-name">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Phone Number</div>
+							<div class="view-field-value" id="view-phone">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Email</div>
+							<div class="view-field-value" id="view-email">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Course Interested</div>
+							<div class="view-field-value" id="view-course">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Preferred Batch</div>
+							<div class="view-field-value" id="view-batch">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Qualification</div>
+							<div class="view-field-value" id="view-qual">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Status</div>
+							<div class="view-field-value" id="view-status">-</div>
+						</div>
+						<div class="col-12 col-md-4">
+							<div class="view-field-label">Referral Date</div>
+							<div class="view-field-value" id="view-date">-</div>
+						</div>
+						<div class="col-12">
+							<div class="view-field-label">Notes / Remarks</div>
+							<div class="view-field-value" id="view-notes">-</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Edit Modal -->
+	<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel"><i
+							class="fa-solid fa-pen-to-square me-2 text-warning"></i>Edit Referral</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body p-4">
+					<form id="editForm">
+						<input type="hidden" id="edit-id">
+						<div class="row g-3">
+							<div class="col-12 col-md-6">
+								<label for="edit-name" class="form-label fw-medium">Student Name <span
+										class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="edit-namef" required>
+							</div>
+							<div class="col-12 col-md-6">
+								<label for="edit-phone" class="form-label fw-medium">Phone Number <span
+										class="text-danger">*</span></label>
+								<input type="tel" class="form-control" id="edit-phonef" maxlength="10" required>
+							</div>
+							<div class="col-12 col-md-6">
+								<label class="form-label fw-medium">Email</label>
+								<input type="email" class="form-control" id="edit-emailf">
+							</div>
+							<div class="col-12 col-md-6">
+								<label class="form-label fw-medium">Course Interested <span
+										class="text-danger">*</span></label>
+								<select class="form-select" id="edit-coursef" required>
+									<option value="">Select course</option>
+									<option value="Java Full Stack">Java Full Stack</option>
+									<option value="Python Development">Python Development</option>
+									<option value="Data Science">Data Science</option>
+									<option value="Web Development">Web Development</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-6">
+								<label class="form-label fw-medium">Preferred Batch</label>
+								<select class="form-select" id="edit-batchf">
+									<option value="">Select batch</option>
+									<option value="Morning">Morning</option>
+									<option value="Evening">Evening</option>
+									<option value="Weekend">Weekend</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-6">
+								<label class="form-label fw-medium">Qualification</label>
+								<input type="text" class="form-control" id="edit-qualf" placeholder="e.g. B.E., BCA">
+							</div>
+							<div class="col-12">
+								<label class="form-label fw-medium">Notes / Remarks</label>
+								<textarea class="form-control" id="edit-notesf" rows="3"></textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn app-btn-primary" id="saveEditBtn"><i
+							class="fa-solid fa-floppy-disk me-1"></i>Save Changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Delete Confirm Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-sm">
+			<div class="modal-content">
+				<div class="modal-header border-0 pb-0">
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body text-center px-4 pb-3">
+					<div class="text-danger mb-3"><i class="fa-solid fa-triangle-exclamation"
+							style="font-size:2.5rem;"></i></div>
+					<h5 class="fw-semibold">Delete Referral?</h5>
+					<p class="text-muted small mb-0">This action cannot be undone. The referral record will be
+						permanently removed.</p>
+					<input type="hidden" id="delete-id">
+				</div>
+				<div class="modal-footer border-0 pt-0 justify-content-center gap-2">
+					<button type="button" class="btn btn-secondary btn-sm px-4" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger btn-sm px-4" id="confirmDeleteBtn">Delete</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Follow-Up Modal -->
+	<div class="modal fade" id="followUpModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">
+						<i class="fa-solid fa-phone me-2"></i>Enquiry Follow-Up
+					</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body">
+					<form id="followUpForm">
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<label class="form-label">Student Name <span class="text-danger">*</span></label>
+								<input type="text" class="form-control" id="followUpStudentName" readonly>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label class="form-label">Mobile No.</label>
+								<input type="text" class="form-control" id="followUpMobile" readonly>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label class="form-label">Follow-Up Mode <span class="text-danger">*</span></label>
+								<select class="form-select" id="followUpMode" required>
+									<option value="">-- Select Mode --</option>
+									<option value="Phone Call">Phone Call</option>
+									<option value="Walk-in">Walk-in</option>
+									<option value="WhatsApp">WhatsApp</option>
+									<option value="Email">Email</option>
+									<option value="SMS">SMS</option>
+								</select>
+							</div>
+							<div class="col-md-6 mb-3">
+								<label class="form-label">Next Follow-Up Date</label>
+								<input type="date" class="form-control" id="nextFollowUpDate">
+							</div>
+							<div class="col-12 mb-3">
+								<label class="form-label">Follow-Up Note <span class="text-danger">*</span></label>
+								<textarea class="form-control" id="followUpNote" rows="4"
+									placeholder="Enter follow-up details..." required></textarea>
+							</div>
+						</div>
+						<input type="hidden" id="followUpLeadId">
+					</form>
+
+					<div class="mt-4">
+						<h6 class="mb-3"><i class="fa-solid fa-clock-rotate-left me-2"></i>Follow-Up History</h6>
+						<div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+							<table class="table table-sm table-bordered table-hover">
+								<thead class="table-light">
+									<tr>
+										<th>Follow-Up Date</th>
+										<th>Next Follow-Up</th>
+										<th>Mode</th>
+										<th>Note</th>
+										<th style="width: 80px;">Action</th>
+									</tr>
+								</thead>
+								<tbody id="followUpHistoryBody">
+									<tr>
+										<td colspan="5" class="text-center text-muted">
+											<small>No follow-up history available</small>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					<button type="button" class="btn app-btn-primary" id="btnSaveFollowUp">
+						<i class="fa-solid fa-circle-check me-2"></i>Save Follow-Up
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Change Status Modal -->
+	<div class="modal fade" id="changeStatusModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title"><i class="fa-solid fa-arrows-rotate me-2"></i>Change Enquiry Status</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<div class="modal-body p-4">
+					<form id="changeStatusForm">
+						<input type="hidden" id="status-lead-id">
+						<div class="mb-3">
+							<label class="form-label fw-bold">Current Status</label>
+							<div id="current-status-display" class="mb-2"></div>
+						</div>
+						<div class="mb-3">
+							<label class="form-label fw-bold">New Status</label>
+							<select class="form-select" id="new-status-select" required>
+								<option value="NEW">New</option>
+								<option value="CONTACTED">Contacted</option>
+								<option value="INTERESTED">Interested</option>
+								<option value="FOLLOW_UP">Follow-up</option>
+								<option value="CONVERTED">Converted</option>
+								<option value="DROPPED">Dropped</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label class="form-label fw-bold">Remark</label>
+							<textarea class="form-control" id="status-remark" rows="3"
+								placeholder="Add a note about the status change..."></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+					<button type="button" class="btn app-btn-primary" id="btnSaveStatusChange">Update Status</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Toast -->
+	<div class="toast-container position-fixed bottom-0 end-0 p-3">
+		<div id="mainToast" class="toast align-items-center border-0" role="alert" aria-live="assertive"
+			aria-atomic="true">
+			<div class="d-flex">
+				<div class="toast-body" id="toastMsg">Message</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+			</div>
+		</div>
+	</div>
+
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script>
+		// ── Sample Data ───────────────────────────────────────────
+		const defaultReferrals = [
+			{ id: 'LEAD001', name: 'Rahul Sharma', phone: '9876543210', email: 'rahul.sharma@gmail.com', course: 'Java Full Stack', status: 'CONVERTED', referredBy: 'College Staff', counselor: 'Counselor A', nextFollowup: '2026-03-20', notes: 'Interested in job placement support.' },
+			{ id: 'LEAD002', name: 'Priya Patil', phone: '9823456780', email: 'priya.patil@gmail.com', course: 'Data Science', status: 'FOLLOW_UP', referredBy: 'Individual', counselor: 'Counselor B', nextFollowup: '2026-03-20', notes: 'Wants weekend demo first.' },
+			{ id: 'LEAD003', name: 'Aman Deshmukh', phone: '8765432190', email: 'aman.deshmukh@yahoo.com', course: 'Web Development', status: 'CONTACTED', referredBy: 'Referral Partner', counselor: 'Unassigned', nextFollowup: '2026-03-21', notes: 'Called twice, pending callback.' },
+			{ id: 'LEAD004', name: 'Sneha Kulkarni', phone: '9012345678', email: 'sneha.k@outlook.com', course: 'Python Development', status: 'CONVERTED', referredBy: 'College Staff', counselor: 'Counselor A', nextFollowup: '2026-03-20', notes: 'Fee paid in full.' },
+			{ id: 'LEAD005', name: 'Vikram Singh', phone: '7890123456', email: 'vikram.s@gmail.com', course: 'Java Full Stack', status: 'NEW', referredBy: 'Notice Board', counselor: 'Unassigned', nextFollowup: '2026-03-20', notes: 'Requested course brochure.' },
+			{ id: 'LEAD006', name: 'Pooja Gupta', phone: '9988776655', email: 'pooja.g@gmail.com', course: 'Data Science', status: 'DROPPED', referredBy: 'Walk-in', counselor: 'Counselor B', nextFollowup: '', notes: 'Not interested on follow up.' },
+		];
+
+		function loadReferrals() {
+			try {
+				const raw = localStorage.getItem('tts_referrals');
+				if (!raw) return [...defaultReferrals];
+				const data = JSON.parse(raw);
+				return Array.isArray(data) && data.length ? data : [...defaultReferrals];
+			} catch (e) {
+				return [...defaultReferrals];
+			}
+		}
+
+		let referrals = loadReferrals();
+
+		// ── State ─────────────────────────────────────────────────
+		let filtered = [...referrals];
+		let sortCol = 'date', sortDir = 'desc';
+		let currentPage = 1;
+		let pageSize = 25;
+		let selectedDeleteId = null;
+
+		// ── Helpers ───────────────────────────────────────────────
+		function statusBadge(s) {
+			const map = { 'NEW': 'badge-new', 'CONTACTED': 'badge-contacted', 'INTERESTED': 'badge-interested', 'FOLLOW_UP': 'badge-contacted', 'CONVERTED': 'badge-converted', 'DROPPED': 'badge-not-interested' };
+			const label = (s || '').replaceAll('_', ' ');
+			const lock = s === 'CONVERTED' ? ' <i class="fa-solid fa-lock ms-1"></i>' : '';
+			return `<span class="badge-status ${map[s] || ''}">${label}${lock}</span>`;
+		}
+
+		function canEdit(status) {
+			return status !== 'CONVERTED';
+		}
+		function canDelete(status) {
+			return status === 'NEW';
+		}
+		function persistReferrals() {
+			try { localStorage.setItem('tts_referrals', JSON.stringify(referrals)); } catch (e) { }
+		}
+		function formatDate(d) {
+			if (!d) return '-';
+			const [y, m, dd] = d.split('-');
+			const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+			return `${dd} ${months[+m - 1]} ${y}`;
+		}
+		function formatISO(d) {
+			if (!d) return '';
+			const dt = new Date(d);
+			if (Number.isNaN(dt.getTime())) return '';
+			return dt.toISOString().slice(0, 10);
+		}
+		function todayISO() {
+			return new Date().toISOString().slice(0, 10);
+		}
+
+		function showToast(msg, type = 'success') {
+			const el = document.getElementById('mainToast');
+			const msgEl = document.getElementById('toastMsg');
+			el.className = `toast align-items-center border-0 text-white bg-${type}`;
+			msgEl.innerHTML = msg;
+			new bootstrap.Toast(el, { delay: 3000 }).show();
+		}
+
+		// ── Apply Filters ─────────────────────────────────────────
+		function applyFilters() {
+			const q = document.getElementById('searchInput').value.toLowerCase();
+			const st = document.getElementById('statusFilter').value;
+			const counselorEl = document.getElementById('counselorFilter');
+			const counselor = counselorEl ? counselorEl.value : '';
+			const co = document.getElementById('courseFilter').value;
+			const ba = document.getElementById('batchFilter').value;
+			filtered = referrals.filter(r => {
+				const matchQ = !q || r.name.toLowerCase().includes(q) || r.phone.includes(q) || r.course.toLowerCase().includes(q) || (r.email || '').toLowerCase().includes(q) || r.id.toLowerCase().includes(q);
+				const matchSt = !st || r.status === st;
+				const matchCounselor = !counselor || (r.counselor || 'Unassigned') === counselor;
+				const matchCo = !co || r.course === co;
+				const matchBa = !ba || r.batch === ba;
+				return matchQ && matchSt && matchCounselor && matchCo && matchBa;
+			});
+			sortData();
+			currentPage = 1;
+			renderTable();
+		}
+
+		// ── Sort ──────────────────────────────────────────────────
+		function sortData() {
+			filtered.sort((a, b) => {
+				let av = a[sortCol] || '', bv = b[sortCol] || '';
+				if (sortDir === 'asc') return av.localeCompare(bv);
+				return bv.localeCompare(av);
+			});
+		}
+
+		// ── Render Table ──────────────────────────────────────────
+		function renderTable() {
+			const tbody = document.getElementById('referralTableBody');
+			const noData = document.getElementById('noDataMsg');
+			const start = (currentPage - 1) * pageSize;
+			const end = start + pageSize;
+			const pageData = filtered.slice(start, end);
+
+			if (filtered.length === 0) { tbody.innerHTML = ''; noData.style.display = 'block'; }
+			else { noData.style.display = 'none'; }
+
+			tbody.innerHTML = pageData.map(r => `
+		<tr>
+			<td><span class="text-muted small fw-medium">${r.id}</span></td>
+			<td><span class="fw-semibold">${r.name}</span></td>
+			<td><a href="tel:+91${r.phone}" class="text-decoration-none">${r.phone}</a></td>
+			<td><span class="small">${r.course}</span></td>
+			<td><span class="small text-muted">${r.referredBy || '—'}</span></td>
+			<td>${statusBadge(r.status)}</td>
+			<td><span class="small">${(r.counselor || 'Unassigned')}</span></td>
+			<td><span class="small text-muted">${r.nextFollowup ? formatDate(r.nextFollowup) : '—'}</span></td>
+			<td class="text-center">
+				<div class="action-btns d-flex justify-content-center">
+					<button class="btn btn-sm text-primary" title="View" onclick="openView('${r.id}')"><i class="fa-solid fa-eye"></i></button>
+					<button class="btn btn-sm text-info" title="Follow-up" onclick="openFollowUp('${r.id}')"><i class="fa-solid fa-phone"></i></button>
+					<button class="btn btn-sm text-success" title="Change Status" onclick="openChangeStatus('${r.id}')"><i class="fa-solid fa-arrows-rotate"></i></button>
+					<button class="btn btn-sm text-warning" ${canEdit(r.status) ? '' : 'disabled'} title="${canEdit(r.status) ? 'Edit basic info' : 'Cannot edit after conversion'}" onclick="openEdit('${r.id}')"><i class="fa-solid fa-pen"></i></button>
+					<button class="btn btn-sm text-danger" ${canDelete(r.status) ? '' : 'disabled'} title="${canDelete(r.status) ? 'Delete referral' : 'Delete allowed only for NEW'}" onclick="openDelete('${r.id}')"><i class="fa-solid fa-trash"></i></button>
+				</div>
+			</td>
+		</tr>
+	`).join('');
+
+			renderPagination();
+			updateStats();
+		}
+
+		// ── Pagination ────────────────────────────────────────────
+		function renderPagination() {
+			const total = filtered.length;
+			const totalPages = Math.ceil(total / pageSize);
+			const start = Math.min((currentPage - 1) * pageSize + 1, total);
+			const end = Math.min(currentPage * pageSize, total);
+			document.getElementById('paginationInfo').textContent = total === 0 ? 'No records found' : `Showing ${start}–${end} of ${total} records`;
+
+			const ul = document.getElementById('paginationControls');
+			let html = '';
+			html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="changePage(${currentPage - 1});return false;">Prev</a></li>`;
+			const range = 2;
+			for (let i = 1; i <= totalPages; i++) {
+				if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+					html += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" onclick="changePage(${i});return false;">${i}</a></li>`;
+				} else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+					html += `<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`;
+				}
+			}
+			html += `<li class="page-item ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="changePage(${currentPage + 1});return false;">Next</a></li>`;
+			ul.innerHTML = html;
+		}
+
+		function changePage(p) {
+			const totalPages = Math.ceil(filtered.length / pageSize);
+			if (p < 1 || p > totalPages) return;
+			currentPage = p;
+			renderTable();
+		}
+
+		// ── Stats ─────────────────────────────────────────────────
+		function updateStats() {
+			document.getElementById('stat-total').textContent = referrals.length;
+			const newEl = document.getElementById('stat-new');
+			if (newEl) newEl.textContent = referrals.filter(r => r.status === 'NEW').length;
+			const followupsEl = document.getElementById('stat-followups');
+			if (followupsEl) {
+				const t = todayISO();
+				followupsEl.textContent = referrals.filter(r => (r.nextFollowup || '') === t && !['CONVERTED', 'DROPPED'].includes(r.status)).length;
+			}
+			document.getElementById('stat-converted').textContent = referrals.filter(r => r.status === 'CONVERTED').length;
+		}
+
+		// ── Sort Headers ──────────────────────────────────────────
+		document.querySelectorAll('.sortable').forEach(th => {
+			th.addEventListener('click', function () {
+				const col = this.dataset.col;
+				if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+				else { sortCol = col; sortDir = 'asc'; }
+				document.querySelectorAll('.sortable').forEach(t => { t.classList.remove('asc', 'desc'); t.querySelector('i').className = 'fa-solid fa-sort'; });
+				this.classList.add(sortDir);
+				this.querySelector('i').className = sortDir === 'asc' ? 'fa-solid fa-sort-up' : 'fa-solid fa-sort-down';
+				sortData(); renderTable();
+			});
+		});
+
+		// ── Controls ──────────────────────────────────────────────
+		document.getElementById('searchInput').addEventListener('input', applyFilters);
+		document.getElementById('statusFilter').addEventListener('change', applyFilters);
+		const counselorFilterEl = document.getElementById('counselorFilter');
+		if (counselorFilterEl) counselorFilterEl.addEventListener('change', applyFilters);
+		document.getElementById('courseFilter').addEventListener('change', applyFilters);
+		document.getElementById('batchFilter').addEventListener('change', applyFilters);
+		document.getElementById('pageSizeSelect').addEventListener('change', function () { pageSize = +this.value; currentPage = 1; renderTable(); });
+
+		// Disable type-to-search/jump inside the course dropdown (keep arrows/enter/esc/tab working)
+		document.getElementById('courseFilter').addEventListener('keydown', function (e) {
+			const allowed = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', 'Tab', 'Home', 'End', 'PageUp', 'PageDown']);
+			if (allowed.has(e.key)) return;
+			if (e.ctrlKey || e.altKey || e.metaKey) return;
+			if (e.key && e.key.length === 1) {
+				e.preventDefault();
+			}
+		});
+
+		// ── Follow-ups (frontend-only) ────────────────────────────
+		function loadFollowUpsStore() {
+			try {
+				const raw = localStorage.getItem('tts_followups');
+				if (!raw) return {};
+				const obj = JSON.parse(raw);
+				return obj && typeof obj === 'object' ? obj : {};
+			} catch (e) {
+				return {};
+			}
+		}
+		function saveFollowUpsStore(store) {
+			try { localStorage.setItem('tts_followups', JSON.stringify(store)); } catch (e) { }
+		}
+		function renderFollowUpHistory(leadId) {
+			const store = loadFollowUpsStore();
+			const history = Array.isArray(store[leadId]) ? store[leadId] : [];
+			const tbody = document.getElementById('followUpHistoryBody');
+			if (!tbody) return;
+			if (!history.length) {
+				tbody.innerHTML = `
+					<tr>
+						<td colspan="5" class="text-center text-muted"><small>No follow-up history available</small></td>
+					</tr>
+				`;
+				return;
+			}
+			tbody.innerHTML = history
+				.slice()
+				.sort((a, b) => (b.followUpDate || '').localeCompare(a.followUpDate || ''))
+				.map((h) => `
+					<tr>
+						<td><span class="small text-muted">${h.followUpDate ? formatDate(h.followUpDate) : '—'}</span></td>
+						<td><span class="small">${h.nextFollowUp ? formatDate(h.nextFollowUp) : '—'}</span></td>
+						<td><span class="small">${h.mode || '—'}</span></td>
+						<td><span class="small">${h.note || ''}</span></td>
+						<td class="text-center"><button class="btn btn-sm" title="Delete" onclick="deleteFollowUp('${leadId}','${h.id}')"><i class="fa-solid fa-trash"></i></button></td>
+					</tr>
+				`).join('');
+		}
+		function openFollowUp(leadId) {
+			const lead = referrals.find((x) => x.id === leadId);
+			if (!lead) return;
+			document.getElementById('followUpLeadId').value = leadId;
+			document.getElementById('followUpStudentName').value = lead.name || '';
+			document.getElementById('followUpMobile').value = lead.phone || '';
+			document.getElementById('followUpMode').value = '';
+			document.getElementById('followUpNote').value = '';
+			const min = todayISO();
+			const dateEl = document.getElementById('nextFollowUpDate');
+			dateEl.min = min;
+			dateEl.value = formatISO(lead.nextFollowup) || min;
+			renderFollowUpHistory(leadId);
+			new bootstrap.Modal(document.getElementById('followUpModal')).show();
+		}
+		function deleteFollowUp(leadId, followUpId) {
+			const store = loadFollowUpsStore();
+			const history = Array.isArray(store[leadId]) ? store[leadId] : [];
+			store[leadId] = history.filter((h) => h.id !== followUpId);
+			saveFollowUpsStore(store);
+			renderFollowUpHistory(leadId);
+			showToast('<i class="fa-solid fa-trash me-2"></i>Follow-up deleted.', 'danger');
+		}
+		document.getElementById('btnSaveFollowUp').addEventListener('click', function () {
+			const leadId = document.getElementById('followUpLeadId').value;
+			const mode = document.getElementById('followUpMode').value;
+			const next = document.getElementById('nextFollowUpDate').value;
+			const note = document.getElementById('followUpNote').value.trim();
+			if (!leadId) return;
+			if (!mode || !note) {
+				showToast('<i class="fa-solid fa-circle-info me-2"></i>Please fill Follow-Up Mode and Note.', 'secondary');
+				return;
+			}
+			const store = loadFollowUpsStore();
+			const history = Array.isArray(store[leadId]) ? store[leadId] : [];
+			history.push({
+				id: `FU_${Date.now()}`,
+				followUpDate: todayISO(),
+				nextFollowUp: next || '',
+				mode,
+				note,
+			});
+			store[leadId] = history;
+			saveFollowUpsStore(store);
+
+			const idx = referrals.findIndex((x) => x.id === leadId);
+			if (idx >= 0) {
+				referrals[idx] = {
+					...referrals[idx],
+					nextFollowup: next || referrals[idx].nextFollowup,
+					status: referrals[idx].status === 'NEW' ? 'FOLLOW_UP' : referrals[idx].status,
+				};
+				persistReferrals();
+			}
+			renderFollowUpHistory(leadId);
+			applyFilters();
+			showToast('<i class="fa-solid fa-circle-check me-2"></i>Follow-up saved.', 'success');
+		});
+
+		function openChangeStatus(leadId) {
+			const lead = referrals.find((x) => x.id === leadId);
+			if (!lead) return;
+			document.getElementById('status-lead-id').value = leadId;
+			document.getElementById('current-status-display').innerHTML = statusBadge(lead.status);
+			document.getElementById('new-status-select').value = lead.status;
+			document.getElementById('status-remark').value = '';
+			new bootstrap.Modal(document.getElementById('changeStatusModal')).show();
+		}
+
+		document.getElementById('btnSaveStatusChange').addEventListener('click', function () {
+			const leadId = document.getElementById('status-lead-id').value;
+			const newStatus = document.getElementById('new-status-select').value;
+			const remark = document.getElementById('status-remark').value.trim();
+
+			const idx = referrals.findIndex((x) => x.id === leadId);
+			if (idx >= 0) {
+				referrals[idx].status = newStatus;
+				// Optionally add to follow-up history as a status change record
+				const store = loadFollowUpsStore();
+				const history = Array.isArray(store[leadId]) ? store[leadId] : [];
+				history.push({
+					id: `FU_ST_${Date.now()}`,
+					followUpDate: todayISO(),
+					nextFollowUp: referrals[idx].nextFollowup || '',
+					mode: 'System',
+					note: `Status changed to ${newStatus}. Remark: ${remark || 'None'}`,
+				});
+				store[leadId] = history;
+				saveFollowUpsStore(store);
+				persistReferrals();
+				applyFilters();
+				bootstrap.Modal.getInstance(document.getElementById('changeStatusModal')).hide();
+				showToast('<i class="fa-solid fa-circle-check me-2"></i>Status updated successfully!', 'success');
+			}
+		});
+
+		window.openFollowUp = openFollowUp;
+		window.openChangeStatus = openChangeStatus;
+
+		// ── View ──────────────────────────────────────────────────
+		function openView(id) {
+			persistReferrals();
+			window.location.href = `referral-details.html?id=${encodeURIComponent(id)}`;
+		}
+
+		// ── Edit ──────────────────────────────────────────────────
+		function openEdit(id) {
+			const r = referrals.find(x => x.id === id);
+			if (!r) return;
+			if (!canEdit(r.status)) { showToast('<i class="fa-solid fa-lock me-2"></i>Cannot edit after conversion.', 'secondary'); return; }
+			document.getElementById('edit-id').value = r.id;
+			document.getElementById('edit-namef').value = r.name;
+			document.getElementById('edit-phonef').value = r.phone;
+			document.getElementById('edit-emailf').value = r.email;
+			document.getElementById('edit-coursef').value = r.course;
+			document.getElementById('edit-batchf').value = r.batch;
+			document.getElementById('edit-qualf').value = r.qual;
+			document.getElementById('edit-notesf').value = r.notes;
+			new bootstrap.Modal(document.getElementById('editModal')).show();
+		}
+		document.getElementById('saveEditBtn').addEventListener('click', function () {
+			const id = document.getElementById('edit-id').value;
+			const idx = referrals.findIndex(x => x.id === id);
+			if (idx < 0) return;
+			referrals[idx] = {
+				...referrals[idx],
+				name: document.getElementById('edit-namef').value,
+				phone: document.getElementById('edit-phonef').value,
+				email: document.getElementById('edit-emailf').value,
+				course: document.getElementById('edit-coursef').value,
+				batch: document.getElementById('edit-batchf').value,
+				qual: document.getElementById('edit-qualf').value,
+				notes: document.getElementById('edit-notesf').value,
+			};
+			bootstrap.Modal.getInstance(document.getElementById('editModal')).hide();
+			persistReferrals();
+			applyFilters();
+			showToast('<i class="fa-solid fa-circle-check me-2"></i>Referral updated successfully!', 'success');
+		});
+
+		// ── Delete ────────────────────────────────────────────────
+		function openDelete(id) {
+			const r = referrals.find(x => x.id === id);
+			if (!r) return;
+			if (!canDelete(r.status)) { showToast('<i class="fa-solid fa-circle-info me-2"></i>Delete allowed only for NEW status.', 'secondary'); return; }
+			selectedDeleteId = id;
+			document.getElementById('delete-id').value = id;
+			new bootstrap.Modal(document.getElementById('deleteModal')).show();
+		}
+		document.getElementById('confirmDeleteBtn').addEventListener('click', function () {
+			referrals = referrals.filter(x => x.id !== selectedDeleteId);
+			bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
+			persistReferrals();
+			applyFilters();
+			showToast('<i class="fa-solid fa-trash me-2"></i>Referral deleted.', 'danger');
+		});
+
+		// ── Init ──────────────────────────────────────────────────
+
+		// Support deep-links from details page
+		try {
+			const url = new URL(window.location.href);
+			const action = url.searchParams.get('action');
+			const id = url.searchParams.get('id');
+			if (action && id) {
+				setTimeout(() => {
+					if (action === 'edit') openEdit(id);
+					if (action === 'delete') openDelete(id);
+				}, 50);
+			}
+		} catch (e) { }
+
+		persistReferrals();
+		applyFilters();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>TTS Referral Dashboard | TechnoKraft Training & Solution</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="description" content="Portal - Bootstrap 5 Admin Dashboard Template For Developers">
+	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- FontAwesome JS-->
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+
+	<!-- App CSS -->
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div><!--//col-->
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div><!--//app-search-box-->
+
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
+									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+									title="Notifications">
+									<!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+										<path fill-rule="evenodd"
+											d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+									</svg>
+									<span class="icon-badge">3</span>
+								</a><!--//dropdown-toggle-->
+
+								<div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
+									<div class="dropdown-menu-header p-3">
+										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
+									</div><!--//dropdown-menu-title-->
+									<div class="dropdown-menu-content">
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<img class="profile-image"
+														src="assets/images/profiles/profile-1.png" alt="">
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">Nikita Patil shared a file with you.</div>
+														<div class="meta"> 2 hrs ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<div class="app-icon-holder">
+														<svg width="1em" height="1em" viewBox="0 0 16 16"
+															class="bi bi-receipt" fill="currentColor"
+															xmlns="http://www.w3.org/2000/svg">
+															<path fill-rule="evenodd"
+																d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1A.5.5 0 0 1 15 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1A.5.5 0 0 1 1 14V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
+															<path fill-rule="evenodd"
+																d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm8-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
+														</svg>
+													</div>
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">You have a new invoice. Proin venenatis
+															interdum est.</div>
+														<div class="meta"> 1 day ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<div class="app-icon-holder icon-holder-mono">
+														<svg width="1em" height="1em" viewBox="0 0 16 16"
+															class="bi bi-bar-chart-line" fill="currentColor"
+															xmlns="http://www.w3.org/2000/svg">
+															<path fill-rule="evenodd"
+																d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1V2zm1 12h2V2h-2v12zm-3 0V7H7v7h2zm-5 0v-3H2v3h2z" />
+														</svg>
+													</div>
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">Your report is ready. Proin venenatis interdum
+															est.</div>
+														<div class="meta"> 3 days ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto">
+													<img class="profile-image"
+														src="assets/images/profiles/profile-2.png" alt="">
+												</div><!--//col-->
+												<div class="col">
+													<div class="info">
+														<div class="desc">Kunal Patil sent you a new message.</div>
+														<div class="meta"> 7 days ago</div>
+													</div>
+												</div><!--//col-->
+											</div><!--//row-->
+											<a class="link-mask" href="notifications.html"></a>
+										</div><!--//item-->
+									</div><!--//dropdown-menu-content-->
+
+									<div class="dropdown-menu-footer p-2 text-center">
+										<a href="notifications.html">View all</a>
+									</div>
+
+								</div><!--//dropdown-menu-->
+							</div><!--//app-utility-item-->
+
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div><!--//app-user-dropdown-->
+						</div><!--//app-utilities-->
+					</div><!--//row-->
+				</div><!--//app-header-content-->
+			</div><!--//container-fluid-->
+		</div><!--//app-header-inner-->
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header><!--//app-header-->
+
+	<div class="app-wrapper">
+
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+
+				<h1 class="app-page-title">My Account</h1>
+				<div class="row gy-4">
+					<div class="col-12 col-lg-6">
+						<div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+							<div class="app-card-header p-3 border-bottom-0">
+								<div class="row align-items-center gx-3">
+									<div class="col-auto">
+										<div class="app-icon-holder">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person"
+												fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd"
+													d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+											</svg>
+										</div><!--//icon-holder-->
+
+									</div><!--//col-->
+									<div class="col-auto">
+										<h4 class="app-card-title">Profile</h4>
+									</div><!--//col-->
+								</div><!--//row-->
+							</div><!--//app-card-header-->
+							<div class="app-card-body px-4 w-100">
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label mb-2"><strong>Photo</strong></div>
+											<div class="item-data"><img class="profile-image"
+													src="assets/images/user.png" alt=""></div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#profileModal" data-edit-field="photo">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Name</strong></div>
+											<div class="item-data">Kunal Patil</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#profileModal" data-edit-field="name">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Email</strong></div>
+											<div class="item-data">kunal.patil@tts.com</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#profileModal" data-edit-field="email">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Location</strong></div>
+											<div class="item-data">
+												Nashik
+											</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#profileModal" data-edit-field="location">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+							</div><!--//app-card-body-->
+							<div class="app-card-footer p-4 mt-auto">
+								<a class="btn app-btn-secondary" href="#" data-bs-toggle="modal"
+									data-bs-target="#profileModal" data-edit-field="all">Manage Profile</a>
+							</div><!--//app-card-footer-->
+
+						</div><!--//app-card-->
+					</div><!--//col-->
+					<div class="col-12 col-lg-6">
+						<div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+							<div class="app-card-header p-3 border-bottom-0">
+								<div class="row align-items-center gx-3">
+									<div class="col-auto">
+										<div class="app-icon-holder">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bank"
+												fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path
+													d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h.5V7h-.5a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h.89L8 .95zM3.777 4h8.447L8 2.05 3.777 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM14 7v7h1V7h-1z" />
+											</svg>
+										</div><!--//icon-holder-->
+
+									</div><!--//col-->
+									<div class="col-auto">
+										<h4 class="app-card-title">Bank Details</h4>
+									</div><!--//col-->
+								</div><!--//row-->
+							</div><!--//app-card-header-->
+							<div class="app-card-body px-4 w-100">
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Account Holder Name</strong></div>
+											<div class="item-data">Kunal Patil</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal"
+												data-edit-field="acc-holder-name">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Bank Name</strong></div>
+											<div class="item-data">State Bank of India (SBI)</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal" data-edit-field="bank-name">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Account Number</strong></div>
+											<div class="item-data">32145678901</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal" data-edit-field="acc-number">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>IFSC Code</strong></div>
+											<div class="item-data">SBIN0001234</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal" data-edit-field="ifsc-code">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>UPI ID</strong></div>
+											<div class="item-data">kunalpatil@okaxis</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal" data-edit-field="upi-id">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Phone Number for Transactions</strong></div>
+											<div class="item-data">+91 98765 43210</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal" data-edit-field="phone-tx">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Email for Transactions</strong></div>
+											<div class="item-data">kunal.patil@tts.com</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#" data-bs-toggle="modal"
+												data-bs-target="#bankDetailsModal" data-edit-field="email-tx">Edit</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+							</div><!--//app-card-body-->
+							<div class="app-card-footer p-4 mt-auto">
+								<a class="btn app-btn-secondary" href="#" data-bs-toggle="modal"
+									data-bs-target="#bankDetailsModal" data-edit-field="all">Manage Bank Details</a>
+							</div><!--//app-card-footer-->
+
+						</div><!--//app-card-->
+					</div>
+					<div class="col-12 col-lg-6">
+						<div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+							<div class="app-card-header p-3 border-bottom-0">
+								<div class="row align-items-center gx-3">
+									<div class="col-auto">
+										<div class="app-icon-holder">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-shield-check"
+												fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd"
+													d="M5.443 1.991a60.17 60.17 0 0 0-2.725.802.454.454 0 0 0-.315.366C1.87 7.056 3.1 9.9 4.567 11.773c.736.94 1.533 1.636 2.197 2.093.333.228.626.394.857.5.116.053.21.089.282.11A.73.73 0 0 0 8 14.5c.007-.001.038-.005.097-.023.072-.022.166-.058.282-.111.23-.106.525-.272.857-.5a10.197 10.197 0 0 0 2.197-2.093C12.9 9.9 14.13 7.056 13.597 3.159a.454.454 0 0 0-.315-.366c-.626-.2-1.682-.526-2.725-.802C9.491 1.71 8.51 1.5 8 1.5c-.51 0-1.49.21-2.557.491zm-.256-.966C6.23.749 7.337.5 8 .5c.662 0 1.77.249 2.813.525a61.09 61.09 0 0 1 2.772.815c.528.168.926.623 1.003 1.184.573 4.197-.756 7.307-2.367 9.365a11.191 11.191 0 0 1-2.418 2.3 6.942 6.942 0 0 1-1.007.586c-.27.124-.558.225-.796.225s-.526-.101-.796-.225a6.908 6.908 0 0 1-1.007-.586 11.192 11.192 0 0 1-2.417-2.3C2.167 10.331.839 7.221 1.412 3.024A1.454 1.454 0 0 1 2.415 1.84a61.11 61.11 0 0 1 2.772-.815z" />
+												<path fill-rule="evenodd"
+													d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+											</svg>
+										</div><!--//icon-holder-->
+
+									</div><!--//col-->
+									<div class="col-auto">
+										<h4 class="app-card-title">Security</h4>
+									</div><!--//col-->
+								</div><!--//row-->
+							</div><!--//app-card-header-->
+							<div class="app-card-body px-4 w-100">
+
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Password</strong></div>
+											<div class="item-data">••••••••</div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#">Change</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+								<div class="item border-bottom py-3">
+									<div class="row justify-content-between align-items-center">
+										<div class="col-auto">
+											<div class="item-label"><strong>Two-Factor Authentication</strong></div>
+											<div class="item-data">You haven't set up two-factor authentication. </div>
+										</div><!--//col-->
+										<div class="col text-end">
+											<a class="btn-sm app-btn-secondary" href="#">Set up</a>
+										</div><!--//col-->
+									</div><!--//row-->
+								</div><!--//item-->
+							</div><!--//app-card-body-->
+
+							<div class="app-card-footer p-4 mt-auto">
+								<a class="btn app-btn-secondary" href="#">Manage Security</a>
+							</div><!--//app-card-footer-->
+
+						</div><!--//app-card-->
+					</div>
+				</div><!--//row-->
+
+			</div><!--//container-fluid-->
+		</div><!--//app-content-->
+
+		<!-- Profile Modal -->
+		<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="profile-form">
+							<div class="mb-3 profile-form-group" id="group-photo">
+								<label for="profile-photo" class="form-label">Profile Photo</label>
+								<input type="file" class="form-control" id="profile-photo">
+							</div>
+							<div class="mb-3 profile-form-group" id="group-name">
+								<label for="profile-name" class="form-label">Full Name</label>
+								<input type="text" class="form-control" id="profile-name" value="Kunal Patil">
+							</div>
+							<div class="mb-3 profile-form-group" id="group-email">
+								<label for="profile-email" class="form-label">Email Address</label>
+								<input type="email" class="form-control" id="profile-email" value="kunal.patil@tts.com">
+							</div>
+							<div class="mb-3 profile-form-group" id="group-location">
+								<label for="profile-location" class="form-label">Location</label>
+								<input type="text" class="form-control" id="profile-location" value="Nashik">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn app-btn-primary"
+							onclick="alert('Profile updated successfully!')" data-bs-dismiss="modal">Save
+							Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Bank Details Modal -->
+		<div class="modal fade" id="bankDetailsModal" tabindex="-1" aria-labelledby="bankDetailsModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="bankDetailsModalLabel">Edit Bank Details</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<form id="bank-details-form">
+							<div class="mb-3 bank-form-group" id="group-acc-holder-name">
+								<label for="acc-holder-name" class="form-label">Account Holder Name</label>
+								<input type="text" class="form-control" id="acc-holder-name" value="Kunal Patil">
+							</div>
+							<div class="mb-3 bank-form-group" id="group-bank-name">
+								<label for="bank-name-select" class="form-label">Bank Name</label>
+								<select class="form-select" id="bank-name-select">
+									<option value="SBI" selected>State Bank of India (SBI)</option>
+									<option value="HDFC">HDFC Bank</option>
+									<option value="ICICI">ICICI Bank</option>
+									<option value="Axis">Axis Bank</option>
+									<option value="PNB">Punjab National Bank (PNB)</option>
+									<option value="BOB">Bank of Baroda (BOB)</option>
+									<option value="Canara">Canara Bank</option>
+									<option value="Union">Union Bank of India</option>
+									<option value="IDFC">IDFC First Bank</option>
+									<option value="Kotak">Kotak Mahindra Bank</option>
+								</select>
+							</div>
+							<div class="mb-3 bank-form-group" id="group-acc-number">
+								<label for="acc-number" class="form-label">Account Number</label>
+								<input type="text" class="form-control" id="acc-number" value="32145678901">
+							</div>
+							<div class="mb-3 bank-form-group" id="group-ifsc-code">
+								<label for="ifsc-code" class="form-label">IFSC Code</label>
+								<input type="text" class="form-control" id="ifsc-code" value="SBIN0001234">
+							</div>
+							<div class="mb-3 bank-form-group" id="group-upi-id">
+								<label for="upi-id" class="form-label">UPI ID</label>
+								<input type="text" class="form-control" id="upi-id" value="kunalpatil@okaxis">
+							</div>
+							<div class="mb-3 bank-form-group" id="group-phone-tx">
+								<label for="phone-tx" class="form-label">Phone Number for Transactions</label>
+								<input type="text" class="form-control" id="phone-tx" value="+91 98765 43210">
+							</div>
+							<div class="mb-3 bank-form-group" id="group-email-tx">
+								<label for="email-tx" class="form-label">Email for Transactions</label>
+								<input type="email" class="form-control" id="email-tx" value="kunal.patil@tts.com">
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+						<button type="button" class="btn app-btn-primary"
+							onclick="alert('Bank details updated successfully!')" data-bs-dismiss="modal">Save
+							Changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<!-- Design by Technokraft Services LLP -->
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+						href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &
+						Solution Pvt. Ltd.</a></small>
+			</div>
+		</footer><!--//app-footer-->
+
+	</div><!--//app-wrapper-->
+
+
+	<!-- Javascript -->
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+	<!-- Page Specific JS -->
+	<script src="assets/js/app.js"></script>
+
+	<script>
+		function setupModalVisibility(modalId, groupClass) {
+			var modal = document.getElementById(modalId);
+			if (modal) {
+				modal.addEventListener('show.bs.modal', function (event) {
+					var button = event.relatedTarget;
+					var fieldToShow = button.getAttribute('data-edit-field');
+					var modalTitle = modal.querySelector('.modal-title');
+					var groups = modal.querySelectorAll('.' + groupClass);
+
+					groups.forEach(function (group) {
+						if (fieldToShow === 'all') {
+							group.style.display = 'block';
+							if (modalTitle) modalTitle.textContent = modalId === 'profileModal' ? 'Edit Profile' : 'Edit All Bank Details';
+						} else if (group.id === 'group-' + fieldToShow) {
+							group.style.display = 'block';
+							if (modalTitle) {
+								var label = button.closest('.row').querySelector('.item-label').textContent.trim();
+								modalTitle.textContent = 'Edit ' + label;
+							}
+						} else {
+							group.style.display = 'none';
+						}
+					});
+				});
+			}
+		}
+
+		setupModalVisibility('profileModal', 'profile-form-group');
+		setupModalVisibility('bankDetailsModal', 'bank-form-group');
+	</script>
+</body>
+
+</html>

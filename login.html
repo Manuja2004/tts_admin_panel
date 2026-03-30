@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>TTS Referral Partner Dashboard | TechnoKraft Training &amp; Solution</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="description" content="TTS">
+	<meta name="author" content="Technokraft Services LLP">
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<!-- FontAwesome JS-->
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+
+	<!-- App CSS -->
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		.auth-card {
+			max-width: 520px;
+		}
+
+		.auth-subtitle {
+			color: rgba(0, 0, 0, 0.6);
+			font-size: 0.95rem;
+			line-height: 1.4;
+		}
+
+		.input-with-icon {
+			position: relative;
+		}
+
+		.input-with-icon .form-control {
+			padding-left: 2.65rem;
+		}
+
+		.input-icon {
+			position: absolute;
+			left: 0.9rem;
+			top: 50%;
+			transform: translateY(-50%);
+			color: rgba(0, 0, 0, 0.45);
+			pointer-events: none;
+		}
+
+		.password-field-container .form-control {
+			padding-left: 2.65rem;
+		}
+
+		.password-field-container {
+			position: relative;
+		}
+
+		.password-toggle {
+			position: absolute;
+			right: 0.75rem;
+			top: 50%;
+			transform: translateY(-50%);
+			border: none;
+			background: transparent;
+			color: rgba(0, 0, 0, 0.55);
+			padding: 0.25rem 0.35rem;
+			border-radius: 6px;
+		}
+
+		.password-toggle:focus {
+			outline: 2px solid rgba(217, 37, 37, 0.25);
+			outline-offset: 2px;
+		}
+
+		.inline-feedback {
+			margin-top: 0.5rem;
+			font-size: 0.875rem;
+		}
+
+		.inline-feedback.is-error {
+			color: #b42318;
+		}
+
+		.inline-feedback.is-warning {
+			color: #b54708;
+		}
+
+		.btn-loading {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.6rem;
+		}
+
+		.btn-spinner {
+			width: 1rem;
+			height: 1rem;
+			border: 2px solid rgba(255, 255, 255, 0.5);
+			border-top-color: #fff;
+			border-radius: 999px;
+			animation: spin 0.9s linear infinite;
+		}
+
+		@keyframes spin {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+
+</head>
+
+<body class="app app-login p-0">
+	<div class="row g-0 app-auth-wrapper">
+		<div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
+			<div class="d-flex flex-column align-content-end">
+				<div class="app-auth-body mx-auto auth-card">
+					<div class="app-auth-branding mb-4"><a class="app-logo" href="index.html"><img
+							class="logo-icon me-2" src="assets/images/app-logo.svg" alt="logo"></a></div>
+					<h2 class="auth-heading text-center mb-2">Login to Your Referral Dashboard</h2>
+					<div class="auth-subtitle text-center mb-4">Track referrals, earnings, and payments in one place</div>
+					<div class="auth-form-container text-start">
+						<form class="auth-form login-form">
+							<div class="mb-3">
+								<label class="sr-only" for="signin-identifier">Email or Mobile Number</label>
+								<div class="input-with-icon">
+									<span class="input-icon" aria-hidden="true"><i class="fa-solid fa-user"></i></span>
+									<input id="signin-identifier" name="signin-identifier" type="text"
+										class="form-control" placeholder="Email or mobile number" autocomplete="username"
+										required="required">
+								</div>
+								<div class="inline-feedback is-error d-none" id="signin-identifier-error"></div>
+							</div><!--//form-group-->
+							<div class="password mb-3">
+								<label class="sr-only" for="signin-password">Password</label>
+								<div class="password-field-container input-with-icon">
+									<span class="input-icon" aria-hidden="true"><i class="fa-solid fa-lock"></i></span>
+									<input id="signin-password" name="signin-password" type="password"
+										class="form-control" placeholder="Password" autocomplete="current-password"
+										required="required">
+									<button type="button" class="password-toggle" id="password-toggle">
+										<i class="fa-solid fa-eye"></i>
+									</button>
+								</div>
+								<div class="inline-feedback is-error d-none" id="signin-password-error"></div>
+								<div class="inline-feedback d-none" id="signin-state"></div>
+								<div class="extra mt-3 row justify-content-between">
+									<div class="col-6">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value=""
+												id="RememberPassword">
+											<label class="form-check-label" for="RememberPassword">
+												Remember me
+											</label>
+										</div>
+									</div><!--//col-6-->
+									<div class="col-6">
+										<div class="forgot-password text-end">
+											<a href="reset-password.html">Forgot password?</a>
+										</div>
+									</div><!--//col-6-->
+								</div><!--//extra-->
+							</div><!--//form-group-->
+							<div class="text-center">
+								<button type="submit" class="btn app-btn-primary w-20 theme-btn mx-auto" id="login-submit"
+									disabled>Access Dashboard</button>
+							</div>
+						</form>
+
+						<div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link"
+								href="signup.html">here</a>.</div>
+					</div><!--//auth-form-container-->
+
+				</div><!--//auth-body-->
+
+			</div><!--//flex-column-->
+		</div><!--//auth-main-col-->
+		<div class="col-12 col-md-5 col-lg-6 h-100 auth-background-col">
+			<div class="auth-background-holder">
+			</div>
+			<div class="auth-background-mask"></div>
+			<div class="auth-background-overlay p-3 p-lg-5">
+				<div class="d-flex flex-column align-content-end h-100">
+					<div class="h-100"></div>
+					<div class="overlay-content p-3 p-lg-4 rounded">
+						<div><a href="https://tts.net.in" target="_blank" rel="noopener noreferrer">TechnoKraft Training
+								& Solution Pvt. Ltd.</a></div>
+						<hr class="my-3" style="opacity:.15;">
+						<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/" target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link" href="https://tts.net.in" target="_blank" rel="noopener noreferrer">TechnoKraft Training &amp; Solution Pvt. Ltd.</a></small>
+					</div>
+				</div>
+			</div><!--//auth-background-overlay-->
+		</div><!--//auth-background-col-->
+
+	</div><!--//row-->
+
+
+	<script>
+		const form = document.querySelector('.login-form');
+		const identifierInput = document.getElementById('signin-identifier');
+		const passwordInput = document.getElementById('signin-password');
+		const submitBtn = document.getElementById('login-submit');
+		const identifierError = document.getElementById('signin-identifier-error');
+		const passwordError = document.getElementById('signin-password-error');
+		const stateEl = document.getElementById('signin-state');
+
+		function setText(el, text, className) {
+			el.classList.remove('d-none', 'is-error', 'is-warning');
+			if (className) el.classList.add(className);
+			el.textContent = text;
+		}
+
+		function clearEl(el) {
+			el.classList.add('d-none');
+			el.textContent = '';
+			el.classList.remove('is-error', 'is-warning');
+		}
+
+		function isValidIdentifier(value) {
+			const v = value.trim();
+			if (!v) return false;
+			const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+			const phoneOk = /^\+?91[ -]?\d{10}$/.test(v) || /^\d{10}$/.test(v);
+			return emailOk || phoneOk;
+		}
+
+		function validate() {
+			clearEl(identifierError);
+			clearEl(passwordError);
+			clearEl(stateEl);
+
+			const identifier = identifierInput.value;
+			const password = passwordInput.value;
+			let ok = true;
+
+			if (!identifier.trim()) {
+				setText(identifierError, 'Email or mobile number is required.', 'is-error');
+				ok = false;
+			} else if (!isValidIdentifier(identifier)) {
+				setText(identifierError, 'Enter a valid email address or 10-digit mobile number.', 'is-error');
+				ok = false;
+			}
+
+			if (!password) {
+				setText(passwordError, 'Password is required.', 'is-error');
+				ok = false;
+			}
+
+			submitBtn.disabled = !ok;
+			return ok;
+		}
+
+		['input', 'blur'].forEach((evt) => {
+			identifierInput.addEventListener(evt, validate);
+			passwordInput.addEventListener(evt, validate);
+		});
+
+		function readStateFromUrl() {
+			const params = new URLSearchParams(window.location.search);
+			return (params.get('state') || '').toLowerCase();
+		}
+
+		function showInlineState(state) {
+			clearEl(stateEl);
+			if (state === 'invalid') {
+				setText(stateEl, 'Invalid email or password', 'is-error');
+			}
+			if (state === 'pending') {
+				setText(stateEl, 'Your account is under review. You will be notified once approved.', 'is-warning');
+			}
+			if (state === 'rejected') {
+				setText(stateEl, 'Your account request was not approved. Please contact support.', 'is-error');
+			}
+		}
+
+		showInlineState(readStateFromUrl());
+
+		form.addEventListener('submit', function (e) {
+			e.preventDefault();
+			if (!validate()) return;
+
+			submitBtn.disabled = true;
+			const originalHtml = submitBtn.innerHTML;
+			submitBtn.classList.add('btn-loading');
+			submitBtn.innerHTML = '<span class="btn-spinner" aria-hidden="true"></span><span>Checking...</span>';
+
+			window.setTimeout(() => {
+				showInlineState(readStateFromUrl() || 'invalid');
+				submitBtn.classList.remove('btn-loading');
+				submitBtn.innerHTML = originalHtml;
+				validate();
+			}, 900);
+		});
+
+		document.getElementById('password-toggle').addEventListener('click', function () {
+			const passwordInput = document.getElementById('signin-password');
+			const icon = this.querySelector('i');
+
+			if (passwordInput.type === 'password') {
+				passwordInput.type = 'text';
+				icon.classList.remove('fa-eye');
+				icon.classList.add('fa-eye-slash');
+			} else {
+				passwordInput.type = 'password';
+				icon.classList.remove('fa-eye-slash');
+				icon.classList.add('fa-eye');
+			}
+		});
+	</script>
+</body>
+
+</html>

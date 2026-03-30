@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Offers & Promotions | TTS College Dashboard</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="TTS College Dashboard - Exclusive Offers & Promotions">
+	<link rel="shortcut icon" href="favicon.ico">
+	<script defer src="assets/plugins/fontawesome/js/all.min.js"></script>
+	<link id="theme-style" rel="stylesheet" href="assets/css/portal.css">
+	<link rel="stylesheet" href="assets/css/custom.css">
+	<style>
+		/* ── Offers page custom styles ── */
+		:root {
+			--offers-purple: #6c5ce7;
+			--offers-blue: #0984e3;
+			--offers-teal: #00b894;
+			--offers-amber: #f39c12;
+			--offers-rose: #d63031;
+			--card-radius: 14px;
+		}
+
+		/* Hero Banner */
+		.offers-hero {
+			background: linear-gradient(135deg, #1a1f36 0%, #2d3561 50%, #1a1f36 100%);
+			border-radius: var(--card-radius);
+			padding: 2rem 2.5rem;
+			color: #fff;
+			position: relative;
+			overflow: hidden;
+			margin-bottom: 1.75rem;
+		}
+
+		.offers-hero::before {
+			content: "";
+			position: absolute;
+			top: -60px;
+			right: -60px;
+			width: 260px;
+			height: 260px;
+			border-radius: 50%;
+			background: rgba(108, 92, 231, 0.18);
+		}
+
+		.offers-hero::after {
+			content: "";
+			position: absolute;
+			bottom: -80px;
+			left: 30%;
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			background: rgba(0, 184, 148, 0.12);
+		}
+
+		.offers-hero-title {
+			font-size: 1.6rem;
+			font-weight: 700;
+			margin-bottom: .35rem;
+		}
+
+		.offers-hero-sub {
+			font-size: .93rem;
+			opacity: .78;
+		}
+
+		.hero-countdown {
+			display: flex;
+			gap: .75rem;
+			margin-top: 1.25rem;
+			flex-wrap: wrap;
+		}
+
+		.cdown-unit {
+			background: rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			border-radius: 8px;
+			padding: .45rem .85rem;
+			text-align: center;
+			min-width: 58px;
+			backdrop-filter: blur(4px);
+		}
+
+		.cdown-val {
+			font-size: 1.5rem;
+			font-weight: 700;
+			line-height: 1;
+			display: block;
+		}
+
+		.cdown-lbl {
+			font-size: .65rem;
+			opacity: .65;
+			text-transform: uppercase;
+			letter-spacing: .06em;
+		}
+
+		/* Tab Nav */
+		.offers-tabs {
+			border-bottom: 2px solid #e7eaf0;
+			margin-bottom: 1.75rem;
+		}
+
+		.offers-tabs .nav-link {
+			color: #6c757d;
+			font-weight: 500;
+			font-size: .88rem;
+			border: none;
+			padding: .65rem 1.25rem;
+			border-bottom: 2px solid transparent;
+			margin-bottom: -2px;
+			border-radius: 0;
+			background: none;
+			transition: all .2s;
+		}
+
+		.offers-tabs .nav-link:hover {
+			color: var(--offers-purple);
+		}
+
+		.offers-tabs .nav-link.active {
+			color: var(--offers-purple);
+			border-bottom-color: var(--offers-purple);
+			font-weight: 600;
+		}
+
+		.offers-tabs .tab-count {
+			display: inline-block;
+			background: #f0effe;
+			color: var(--offers-purple);
+			border-radius: 20px;
+			padding: .05rem .45rem;
+			font-size: .72rem;
+			font-weight: 700;
+			margin-left: .35rem;
+		}
+
+		/* Offer Badge */
+		.offer-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: .3rem;
+			font-size: .7rem;
+			font-weight: 700;
+			border-radius: 20px;
+			padding: .2rem .65rem;
+			text-transform: uppercase;
+			letter-spacing: .05em;
+		}
+
+		.badge-featured {
+			background: #fff8e6;
+			color: #b8860b;
+			border: 1px solid #f5d87e;
+		}
+
+		.badge-trending {
+			background: #f0effe;
+			color: #6c5ce7;
+			border: 1px solid #c4b5fd;
+		}
+
+		.badge-limited {
+			background: #fff0f0;
+			color: #d63031;
+			border: 1px solid #ffb3b3;
+		}
+
+		.badge-new {
+			background: #e8f5e9;
+			color: #2e7d32;
+			border: 1px solid #a5d6a7;
+		}
+
+		.badge-bestvalue {
+			background: #e3f2fd;
+			color: #1565c0;
+			border: 1px solid #90caf9;
+		}
+
+		/* Offer Card */
+		.offer-card {
+			background: #fff;
+			border-radius: var(--card-radius);
+			box-shadow: 0 2px 16px rgba(26, 31, 54, 0.08);
+			border: 1px solid #eef0f6;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			transition: transform .22s ease, box-shadow .22s ease;
+		}
+
+		.offer-card:hover {
+			box-shadow: 0 8px 32px rgba(108, 92, 231, 0.13);
+		}
+
+		.offer-card-accent {
+			height: 4px;
+			width: 100%;
+		}
+
+		.offer-card-body {
+			padding: 1.35rem 1.5rem;
+			flex: 1;
+		}
+
+		.offer-card-footer {
+			padding: .9rem 1.5rem;
+			background: #f8f9fc;
+			border-top: 1px solid #eef0f6;
+		}
+
+		.course-icon {
+			width: 44px;
+			height: 44px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			margin-bottom: .85rem;
+		}
+
+		.offer-course-name {
+			font-size: 1rem;
+			font-weight: 700;
+			color: #1a1f36;
+			margin-bottom: .2rem;
+		}
+
+		.offer-course-meta {
+			font-size: .78rem;
+			color: #6c757d;
+			margin-bottom: 1rem;
+		}
+
+		.price-original {
+			font-size: .85rem;
+			color: #adb5bd;
+			text-decoration: line-through;
+		}
+
+		.price-discounted {
+			font-size: 1.55rem;
+			font-weight: 700;
+			color: #1a1f36;
+			line-height: 1.1;
+		}
+
+		.price-savings {
+			display: inline-block;
+			background: #e8f5e9;
+			color: #2e7d32;
+			border-radius: 6px;
+			font-size: .75rem;
+			font-weight: 600;
+			padding: .15rem .55rem;
+			margin-top: .25rem;
+		}
+
+		.offer-features {
+			list-style: none;
+			padding: 0;
+			margin: 1rem 0 0;
+		}
+
+		.offer-features li {
+			font-size: .8rem;
+			color: #495057;
+			display: flex;
+			align-items: center;
+			gap: .5rem;
+			padding: .22rem 0;
+		}
+
+		.offer-features li i {
+			color: var(--offers-teal);
+			font-size: .75rem;
+		}
+
+		.validity-chip {
+			display: inline-flex;
+			align-items: center;
+			gap: .3rem;
+			font-size: .73rem;
+			color: #6c757d;
+			margin-top: .85rem;
+		}
+
+		.validity-chip i {
+			color: var(--offers-amber);
+		}
+
+		/* Progress bar for referral cards */
+		.ref-progress-wrap {
+			margin: .75rem 0;
+		}
+
+		.ref-progress-label {
+			display: flex;
+			justify-content: space-between;
+			font-size: .75rem;
+			color: #6c757d;
+			margin-bottom: .3rem;
+		}
+
+		.ref-progress-bar {
+			height: 8px;
+			border-radius: 99px;
+			background: #e9ecef;
+			overflow: hidden;
+		}
+
+		.ref-progress-fill {
+			height: 100%;
+			border-radius: 99px;
+			background: linear-gradient(90deg, var(--offers-purple), #a678f5);
+			transition: width .6s ease;
+		}
+
+		/* Placement Card */
+		.placement-feature-row {
+			display: flex;
+			align-items: flex-start;
+			gap: .85rem;
+			padding: .85rem .75rem;
+			border-radius: 10px;
+			background: #f8f9fc;
+			border: 1px solid #eef0f6;
+			margin-bottom: .75rem;
+			transition: background .2s;
+		}
+
+		.placement-feature-row:hover {
+			background: #f0effe;
+		}
+
+		.placement-icon {
+			width: 40px;
+			height: 40px;
+			min-width: 40px;
+			border-radius: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1rem;
+		}
+
+		.placement-title {
+			font-size: .88rem;
+			font-weight: 600;
+			color: #1a1f36;
+			margin-bottom: .12rem;
+		}
+
+		.placement-desc {
+			font-size: .77rem;
+			color: #6c757d;
+		}
+
+		/* Stats ribbon */
+		.stats-ribbon {
+			background: #fff;
+			border-radius: var(--card-radius);
+			box-shadow: 0 2px 12px rgba(26, 31, 54, 0.07);
+			border: 1px solid #eef0f6;
+			margin-bottom: 1.75rem;
+		}
+
+		.stats-ribbon .stat-item {
+			padding: 1rem 1.5rem;
+			border-right: 1px solid #eef0f6;
+		}
+
+		.stats-ribbon .stat-item:last-child {
+			border-right: none;
+		}
+
+		.stat-val {
+			font-size: 1.45rem;
+			font-weight: 700;
+			color: #1a1f36;
+		}
+
+		.stat-lbl {
+			font-size: .75rem;
+			color: #6c757d;
+			margin-top: .1rem;
+		}
+
+		/* CTA Button */
+		.btn-offer-primary {
+			background: linear-gradient(135deg, var(--offers-purple), #a678f5);
+			color: #fff;
+			border: none;
+			border-radius: 8px;
+			padding: .55rem 1.25rem;
+			font-size: .84rem;
+			font-weight: 600;
+			width: 100%;
+			transition: opacity .2s, transform .15s;
+		}
+
+		.btn-offer-primary:hover {
+			opacity: .9;
+			color: #fff;
+		}
+
+		.btn-offer-outline {
+			background: transparent;
+			border: 1.5px solid var(--offers-purple);
+			color: var(--offers-purple);
+			border-radius: 8px;
+			padding: .55rem 1.25rem;
+			font-size: .84rem;
+			font-weight: 600;
+			width: 100%;
+			transition: all .2s;
+		}
+
+		.btn-offer-outline:hover {
+			background: var(--offers-purple);
+			color: #fff;
+		}
+
+		.section-heading {
+			font-size: 1rem;
+			font-weight: 700;
+			color: #1a1f36;
+			margin-bottom: 1.25rem;
+			display: flex;
+			align-items: center;
+			gap: .5rem;
+		}
+
+		.section-heading i {
+			color: var(--offers-purple);
+		}
+	</style>
+</head>
+
+<body class="app">
+	<header class="app-header fixed-top">
+		<div class="app-header-inner">
+			<div class="container-fluid py-2">
+				<div class="app-header-content">
+					<div class="row justify-content-between align-items-center">
+						<div class="col-auto">
+							<a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+									role="img">
+									<title>Menu</title>
+									<path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+										stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
+								</svg>
+							</a>
+						</div>
+						<div class="app-search-box col">
+							<h1 class="topbar-brand mb-0">TechnoKraft <span>Training &amp; Solution</span> Pvt. Ltd.
+							</h1>
+						</div>
+						<div class="app-utilities col-auto">
+							<div class="app-utility-item app-notifications-dropdown dropdown">
+								<a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
+									data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
+									title="Notifications">
+									<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell icon"
+										fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z" />
+										<path fill-rule="evenodd"
+											d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+									</svg>
+									<span class="icon-badge">3</span>
+								</a>
+								<div class="dropdown-menu p-0" aria-labelledby="notifications-dropdown-toggle">
+									<div class="dropdown-menu-header p-3">
+										<h5 class="dropdown-menu-title mb-0">Notifications</h5>
+									</div>
+									<div class="dropdown-menu-content">
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto"><img class="profile-image"
+														src="assets/images/profiles/profile-1.png" alt=""></div>
+												<div class="col">
+													<div class="info">
+														<div class="desc">Nikita Patil shared a file with you.</div>
+														<div class="meta"> 2 hrs ago</div>
+													</div>
+												</div>
+											</div><a class="link-mask" href="notifications.html"></a>
+										</div>
+										<div class="item p-3">
+											<div class="row gx-2 justify-content-between align-items-center">
+												<div class="col-auto"><img class="profile-image"
+														src="assets/images/profiles/profile-2.png" alt=""></div>
+												<div class="col">
+													<div class="info">
+														<div class="desc">Kunal Patil sent you a new message.</div>
+														<div class="meta"> 7 days ago</div>
+													</div>
+												</div>
+											</div><a class="link-mask" href="notifications.html"></a>
+										</div>
+									</div>
+									<div class="dropdown-menu-footer p-2 text-center"><a href="notifications.html">View
+											all</a></div>
+								</div>
+							</div>
+							<div class="app-utility-item app-user-dropdown dropdown">
+								<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#"
+									role="button" aria-expanded="false"><img src="assets/images/user.png"
+										alt="user profile"></a>
+								<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+									<li><a class="dropdown-item" href="account.html">Profile Info</a></li>
+									<li><a class="dropdown-item" href="help.html">Help</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="login.html">Logout</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="app-sidepanel" class="app-sidepanel">
+			<div id="sidepanel-drop" class="sidepanel-drop"></div>
+			<div class="sidepanel-inner d-flex flex-column">
+				<a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
+
+				<div class="app-user-info px-4 my-4 border-bottom pb-3 mb-0">
+					<div class="d-flex align-items-center">
+						<img class="profile-image rounded-circle me-3" src="assets/images/user.png" alt=""
+							style="width: 40px; height: 40px;">
+						<div class="user-details">
+							<div class="user-name fw-bold small">Kunal Patil</div>
+							<div class="user-role text-muted" id="current-user-role" style="font-size: 0.75rem;">
+								Referral Partner</div>
+						</div>
+					</div>
+					<a href="account.html"
+						class="profile-shortcut d-block mt-2 small text-link text-decoration-none">View
+						Profile</a>
+				</div><!--//app-user-info-->
+
+				<nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1 mb-4">
+					<ul class="app-menu list-unstyled accordion" id="menu-accordion">
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">MAIN</li>
+
+						<li class="nav-item" data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link active" href="index.html">
+								<span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+								<span class="nav-link-text">Dashboard</span>
+							</a>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-user-management" aria-expanded="false"
+								aria-controls="submenu-user-management">
+								<span class="nav-icon"><i class="fa-solid fa-users-gear"></i></span>
+								<span class="nav-link-text">User Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-user-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="admins.html">Admins</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="counselors.html">Counselors</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="referral-partners.html">Referral Partners</a></li>
+								</ul>
+							</div>
+						</li>
+
+
+						<li class="nav-item has-submenu">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-lead-management" aria-expanded="false"
+								aria-controls="submenu-lead-management">
+								<span class="nav-icon"><i class="fa-solid fa-inbox"></i></span>
+								<span class="nav-link-text">Lead Management</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-lead-management" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="leads.html">All Leads</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="assigned-leads.html">Assigned
+											Leads</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followups.html">Follow-Ups</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="followup-calendar.html">Calendar Scheduler</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,counselor">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-conversions" aria-expanded="false"
+								aria-controls="submenu-conversions">
+								<span class="nav-icon"><i class="fa-solid fa-graduation-cap"></i></span>
+								<span class="nav-link-text">Conversions</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-conversions" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="conversions.html">Converted
+											Students</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3">BUSINESS</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-earnings" aria-expanded="false"
+								aria-controls="submenu-earnings">
+								<span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+								<span class="nav-link-text">Earnings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-earnings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="earnings.html">Earnings
+											Overview</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-payments" aria-expanded="false"
+								aria-controls="submenu-payments">
+								<span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+								<span class="nav-link-text">Payments</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-payments" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link"
+											href="process-payments.html">Process Payments</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="payment-history.html">Payment
+											History</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-offers" aria-expanded="false" aria-controls="submenu-offers">
+								<span class="nav-icon"><i class="fa-solid fa-gift"></i></span>
+								<span class="nav-link-text">Offers</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-offers" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="offers.html">Create Offers</a></li>
+									<li class="submenu-item" data-roles="super_admin,admin,manager"><a
+											class="submenu-link" href="comm-templates.html">Message Templates</a></li>
+									<li class="submenu-item" data-roles="referral_partner"><a class="submenu-link"
+											href="partner-onboarding.html">Partner Guide</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-header small text-uppercase text-muted px-4 mb-2 mt-3"
+							data-roles="super_admin,admin,manager">ADMIN</li>
+
+						<li class="nav-item has-submenu" data-roles="super_admin,admin,manager">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-masters" aria-expanded="false" aria-controls="submenu-masters">
+								<span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+								<span class="nav-link-text">Masters</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-masters" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="roles-permissions.html">Role
+											& Permission Master</a>
+									</li>
+									<li class="submenu-item"><a class="submenu-link" href="courses.html">Course
+											Master</a></li>
+									<li class="submenu-item"><a class="submenu-link"
+											href="commission-master.html">Commission Master</a></li>
+								</ul>
+							</div>
+						</li>
+
+						<li class="nav-item has-submenu"
+							data-roles="super_admin,admin,manager,counselor,referral_partner">
+							<a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse"
+								data-bs-target="#submenu-settings" aria-expanded="false"
+								aria-controls="submenu-settings">
+								<span class="nav-icon"><i class="fa-solid fa-sliders"></i></span>
+								<span class="nav-link-text">Settings</span>
+								<span class="submenu-arrow"><i class="fa-solid fa-chevron-down small"></i></span>
+							</a>
+							<div id="submenu-settings" class="collapse submenu" data-bs-parent="#menu-accordion">
+								<ul class="submenu-list list-unstyled">
+									<li class="submenu-item"><a class="submenu-link" href="account.html">Profile
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="system-settings.html">System
+											Settings</a></li>
+									<li class="submenu-item"><a class="submenu-link" href="audit-logs.html">Audit
+											Trails</a></li>
+								</ul>
+							</div>
+						</li>
+
+					</ul><!--//app-menu-->
+				</nav><!--//app-nav-->
+
+				<div class="app-sidepanel-footer border-top pt-2">
+					<nav class="app-nav app-nav-footer">
+						<ul class="app-menu footer-menu list-unstyled">
+							<li class="nav-item">
+								<a class="nav-link" href="#"
+									onclick="if(confirm('Are you sure you want to logout?')) window.location.href='login.html';">
+									<span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+									<span class="nav-link-text">Logout</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div><!--//app-sidepanel-footer-->
+
+
+			</div><!--//sidepanel-inner-->
+		</div><!--//app-sidepanel-->
+	</header>
+
+
+	<style>
+		:root {
+			--report-blue: #0984e3;
+			--report-green: #00b894;
+			--report-purple: #6c5ce7;
+			--report-orange: #fdcb6e;
+			--report-bg: #f8f9fc;
+			--report-border: #eef0f6;
+		}
+
+		.rep-header {
+			background: #fff;
+			padding: 1.5rem;
+			border-radius: 12px;
+			border: 1px solid var(--report-border);
+			margin-bottom: 1.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 1rem;
+			box-shadow: 0 2px 8px rgba(26, 31, 54, 0.02);
+		}
+
+		.rep-title {
+			font-size: 1.4rem;
+			font-weight: 700;
+			margin: 0;
+			color: #1a1f36;
+		}
+
+		.rep-desc {
+			font-size: 0.9rem;
+			color: #6c757d;
+			margin-top: 0.2rem;
+		}
+
+		.rep-tabs {
+			border-bottom: 2px solid var(--report-border);
+			margin-bottom: 1.5rem;
+		}
+
+		.rep-tabs .nav-link {
+			color: #6c757d;
+			font-weight: 500;
+			font-size: 0.95rem;
+			padding: 0.75rem 1.25rem;
+			border: none;
+			border-bottom: 2px solid transparent;
+			margin-bottom: -2px;
+			transition: all 0.2s;
+		}
+
+		.rep-tabs .nav-link:hover {
+			color: var(--report-blue);
+		}
+
+		.rep-tabs .nav-link.active {
+			color: var(--report-blue);
+			border-bottom-color: var(--report-blue);
+			font-weight: 600;
+		}
+
+		.kpi-card {
+			background: #fff;
+			border: 1px solid var(--report-border);
+			border-radius: 12px;
+			padding: 1.5rem;
+			height: 100%;
+			box-shadow: 0 2px 6px rgba(26, 31, 54, 0.02);
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.kpi-card::before {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 0;
+			bottom: 0;
+			width: 4px;
+		}
+
+		.kpi-blue::before {
+			background: var(--report-blue);
+		}
+
+		.kpi-green::before {
+			background: var(--report-green);
+		}
+
+		.kpi-purple::before {
+			background: var(--report-purple);
+		}
+
+		.kpi-orange::before {
+			background: var(--report-orange);
+		}
+
+		.kpi-icon {
+			width: 48px;
+			height: 48px;
+			border-radius: 12px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.25rem;
+		}
+
+		.kpi-blue .kpi-icon {
+			background: #e3f2fd;
+			color: var(--report-blue);
+		}
+
+		.kpi-green .kpi-icon {
+			background: #e8f5e9;
+			color: var(--report-green);
+		}
+
+		.kpi-purple .kpi-icon {
+			background: #f0effe;
+			color: var(--report-purple);
+		}
+
+		.kpi-orange .kpi-icon {
+			background: #fff8e6;
+			color: #f39c12;
+		}
+
+		.kpi-title {
+			font-size: 0.85rem;
+			color: #6c757d;
+			font-weight: 600;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			margin-bottom: 0.2rem;
+		}
+
+		.kpi-val {
+			font-size: 1.6rem;
+			font-weight: 700;
+			color: #1a1f36;
+			line-height: 1.2;
+		}
+
+		.kpi-trend {
+			font-size: 0.75rem;
+			font-weight: 700;
+			margin-top: 0.25rem;
+		}
+
+		.trend-up {
+			color: #2e7d32;
+		}
+
+		.trend-down {
+			color: #c62828;
+		}
+
+		.chart-card {
+			background: #fff;
+			border: 1px solid var(--report-border);
+			border-radius: 12px;
+			padding: 1.25rem;
+			height: 100%;
+			box-shadow: 0 2px 6px rgba(26, 31, 54, 0.02);
+		}
+
+		.chart-head {
+			font-size: 1rem;
+			font-weight: 600;
+			color: #1a1f36;
+			margin-bottom: 1rem;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.chart-canvas-wrap {
+			position: relative;
+			height: 280px;
+			width: 100%;
+		}
+
+		.insight-box {
+			background: linear-gradient(135deg, #f0effe 0%, #e0dcfc 100%);
+			border-radius: 12px;
+			padding: 1.5rem;
+			display: flex;
+			gap: 1rem;
+			align-items: flex-start;
+		}
+
+		.insight-icon {
+			width: 40px;
+			height: 40px;
+			background: #6c5ce7;
+			color: #fff;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			flex-shrink: 0;
+		}
+
+		.insight-title {
+			font-size: 0.95rem;
+			font-weight: 700;
+			color: #1a1f36;
+			margin-bottom: 0.4rem;
+		}
+
+		.insight-text {
+			font-size: 0.85rem;
+			color: #493baf;
+			margin: 0;
+			line-height: 1.5;
+		}
+
+		.table-rep th {
+			font-size: 0.75rem;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: #6c757d;
+			font-weight: 600;
+			background: #f8f9fc;
+		}
+
+		.table-rep td {
+			padding: 1rem 0.5rem;
+			vertical-align: middle;
+			font-size: 0.85rem;
+			color: #1a1f36;
+			font-weight: 500;
+			border-bottom: 1px solid var(--report-border);
+		}
+	</style>
+
+	<!-- Required for charts -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
+			<div class="container-xl">
+
+				<div class="rep-header">
+					<div>
+						<h1 class="rep-title"><i class="fa-solid fa-chart-pie me-2 text-primary"></i> Reports &
+							Analytics</h1>
+						<div class="rep-desc">Track your referral conversion metrics and earnings performance.</div>
+					</div>
+					<div>
+						<select class="form-select fw-bold bg-light" style="width: auto;">
+							<option selected>March 2026</option>
+							<option>February 2026</option>
+							<option>January 2026</option>
+							<option>Q1 2026 (Jan-Mar)</option>
+							<option>All Time</option>
+						</select>
+					</div>
+				</div>
+
+				<ul class="nav rep-tabs" id="repTabs" role="tablist">
+					<li class="nav-item">
+						<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#pane-monthly">Monthly
+							Performance</button>
+					</li>
+					<li class="nav-item">
+						<button class="nav-link" data-bs-toggle="tab" data-bs-target="#pane-analytics">Advanced
+							Analytics</button>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+
+					<!-- MONTHLY PERFORMANCE -->
+					<div class="tab-pane fade show active" id="pane-monthly">
+
+						<!-- KPIs -->
+						<div class="row g-4 mb-4">
+							<div class="col-6 col-lg-3">
+								<div class="kpi-card kpi-blue">
+									<div class="kpi-icon"><i class="fa-solid fa-users"></i></div>
+									<div>
+										<div class="kpi-title">Total Referrals</div>
+										<div class="kpi-val">124</div>
+										<div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +12%
+											vs last month</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-lg-3">
+								<div class="kpi-card kpi-purple">
+									<div class="kpi-icon"><i class="fa-solid fa-award"></i></div>
+									<div>
+										<div class="kpi-title">Converted</div>
+										<div class="kpi-val">42</div>
+										<div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +8%
+											vs last month</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-lg-3">
+								<div class="kpi-card kpi-green">
+									<div class="kpi-icon"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+									<div>
+										<div class="kpi-title">Earnings</div>
+										<div class="kpi-val">₹84,500</div>
+										<div class="kpi-trend trend-up"><i class="fa-solid fa-arrow-trend-up"></i> +24%
+											vs last month</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6 col-lg-3">
+								<div class="kpi-card kpi-orange">
+									<div class="kpi-icon"><i class="fa-solid fa-bolt"></i></div>
+									<div>
+										<div class="kpi-title">Conv. Rate</div>
+										<div class="kpi-val">33.8%</div>
+										<div class="kpi-trend trend-down"><i class="fa-solid fa-arrow-trend-down"></i>
+											-1.2% vs last month</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Charts -->
+						<div class="row g-4 mb-4">
+							<div class="col-12 col-lg-8">
+								<div class="chart-card">
+									<div class="chart-head">
+										<span>Referrals vs Conversions Trend</span>
+										<button class="btn btn-sm btn-light"><i
+												class="fa-solid fa-download"></i></button>
+									</div>
+									<div class="chart-canvas-wrap">
+										<canvas id="volChart"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-lg-4">
+								<div class="chart-card">
+									<div class="chart-head">Earnings Breakdown</div>
+									<div class="chart-canvas-wrap">
+										<canvas id="earnChart"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Table Breakdown -->
+						<div class="chart-card mb-4" style="height:auto;">
+							<div class="chart-head mb-0">Monthly Breakdown by Course</div>
+							<div class="table-responsive mt-3">
+								<table class="table table-rep mb-0">
+									<thead>
+										<tr>
+											<th>Course Name</th>
+											<th class="text-center">Leads Sent</th>
+											<th class="text-center">Enrolled</th>
+											<th class="text-center">Conv. Rate</th>
+											<th class="text-end">Total Earnings</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><i class="fa-brands fa-java text-primary me-2"></i>Java Full Stack</td>
+											<td class="text-center">45</td>
+											<td class="text-center">18</td>
+											<td class="text-center"><span
+													class="badge bg-success bg-opacity-10 text-success">40%</span></td>
+											<td class="text-end text-success fw-bold">₹45,000</td>
+										</tr>
+										<tr>
+											<td><i class="fa-solid fa-chart-line text-info me-2"></i>Data Science & ML
+											</td>
+											<td class="text-center">38</td>
+											<td class="text-center">12</td>
+											<td class="text-center"><span
+													class="badge bg-success bg-opacity-10 text-success">31%</span></td>
+											<td class="text-end text-success fw-bold">₹24,500</td>
+										</tr>
+										<tr>
+											<td><i class="fa-brands fa-html5 text-warning me-2"></i>Web Development</td>
+											<td class="text-center">25</td>
+											<td class="text-center">8</td>
+											<td class="text-center"><span
+													class="badge bg-danger bg-opacity-10 text-danger">32%</span></td>
+											<td class="text-end text-success fw-bold">₹9,000</td>
+										</tr>
+										<tr>
+											<td><i class="fa-brands fa-aws text-orange me-2"></i>Cloud & DevOps</td>
+											<td class="text-center">16</td>
+											<td class="text-center">4</td>
+											<td class="text-center"><span
+													class="badge bg-danger bg-opacity-10 text-danger">25%</span></td>
+											<td class="text-end text-success fw-bold">₹6,000</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div><!-- /pane-monthly -->
+
+					<!-- ANALYTICS -->
+					<div class="tab-pane fade" id="pane-analytics">
+
+						<div class="insight-box mb-4">
+							<div class="insight-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+							<div>
+								<div class="insight-title">Smart Business Insight</div>
+								<p class="insight-text">Your conversion rate for <strong>Java Full Stack</strong> (40%)
+									is substantially higher than your average (33.8%). Focusing your marketing efforts
+									on Java batches could yield a projected <strong>15% increase in earnings</strong>
+									next month. Conversely, Cloud & DevOps is seeing higher drop-offs at the interview
+									stage.</p>
+							</div>
+						</div>
+
+						<div class="row g-4 mb-4">
+							<div class="col-12 col-md-6">
+								<div class="chart-card">
+									<div class="chart-head">Lead Drop-off Analysis</div>
+									<div class="chart-canvas-wrap">
+										<canvas id="funnelChart"></canvas>
+									</div>
+								</div>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="chart-card">
+									<div class="chart-head">Conversion Rate by Source</div>
+									<div class="chart-canvas-wrap">
+										<canvas id="sourceChart"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script>
+			// Chart Initializations
+			document.addEventListener('DOMContentLoaded', function () {
+				// Chart defaults
+				Chart.defaults.font.family = "'Inter', system-ui, -apple-system, sans-serif";
+				Chart.defaults.color = '#6c757d';
+				Chart.defaults.plugins.tooltip.backgroundColor = '#1a1f36';
+				Chart.defaults.plugins.tooltip.padding = 10;
+				Chart.defaults.plugins.tooltip.cornerRadius = 8;
+				Chart.defaults.plugins.legend.labels.usePointStyle = true;
+				Chart.defaults.plugins.legend.labels.boxWidth = 8;
+
+				// Volume Line Chart
+				new Chart(document.getElementById('volChart'), {
+					type: 'line',
+					data: {
+						labels: ['1 Mar', '6 Mar', '11 Mar', '16 Mar', '21 Mar', '26 Mar', '31 Mar'],
+						datasets: [{
+							label: 'Leads Added',
+							data: [12, 19, 25, 22, 35, 42, 38],
+							borderColor: '#0984e3',
+							backgroundColor: 'rgba(9, 132, 227, 0.1)',
+							borderWidth: 3,
+							tension: 0.4,
+							fill: true
+						}, {
+							label: 'Enrolled',
+							data: [3, 5, 8, 12, 19, 24, 28],
+							borderColor: '#00b894',
+							backgroundColor: 'transparent',
+							borderWidth: 3,
+							tension: 0.4
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						interaction: {
+							intersect: false,
+							mode: 'index',
+						},
+						scales: {
+							y: { beginAtZero: true, grid: { color: '#eef0f6' } },
+							x: { grid: { display: false } }
+						}
+					}
+				});
+
+				// Earnings Doughnut
+				new Chart(document.getElementById('earnChart'), {
+					type: 'doughnut',
+					data: {
+						labels: ['Java Full Stack', 'Data Science', 'Web Dev', 'Cloud'],
+						datasets: [{
+							data: [45000, 24500, 9000, 6000],
+							backgroundColor: ['#6c5ce7', '#0984e3', '#00b894', '#fdcb6e'],
+							borderWidth: 0,
+							hoverOffset: 4
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						cutout: '75%',
+						plugins: {
+							legend: { position: 'bottom' }
+						}
+					}
+				});
+
+				// Drop-off Bar Chart
+				new Chart(document.getElementById('funnelChart'), {
+					type: 'bar',
+					data: {
+						labels: ['Total Leads', 'Contacted', 'Interested', 'Enrolled'],
+						datasets: [{
+							label: 'Students',
+							data: [124, 98, 65, 42],
+							backgroundColor: '#6c5ce7',
+							borderRadius: 6
+						}]
+					},
+					options: {
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							y: { beginAtZero: true, grid: { color: '#eef0f6' } },
+							x: { grid: { display: false } }
+						},
+						plugins: { legend: { display: false } }
+					}
+				});
+
+				// Source Conversion Chart
+				new Chart(document.getElementById('sourceChart'), {
+					type: 'bar',
+					data: {
+						labels: ['Social Media', 'Campus Drive', 'Word of Mouth', 'Website'],
+						datasets: [{
+							label: 'Conversion %',
+							data: [25, 45, 55, 18],
+							backgroundColor: '#00b894',
+							borderRadius: 6
+						}]
+					},
+					options: {
+						indexAxis: 'y',
+						responsive: true,
+						maintainAspectRatio: false,
+						scales: {
+							x: { beginAtZero: true, max: 100, grid: { color: '#eef0f6' } },
+							y: { grid: { display: false } }
+						},
+						plugins: { legend: { display: false } }
+					}
+				});
+			});
+		</script>
+		<footer class="app-footer">
+			<div class="container text-center py-3">
+				<small class="copyright">Design by <a class="app-link" href="https://www.technokraftservices.com/"
+						target="_blank" rel="noopener noreferrer">Technokraft Services LLP</a> | <a class="app-link"
+						href="https://tts.net.in/" target="_blank" rel="noopener noreferrer">TechnoKraft Training &amp;
+						Solution Pvt. Ltd.</a></small>
+			</div>
+		</footer>
+
+	</div><!-- /app-wrapper -->
+
+	<script src="assets/plugins/popper.min.js"></script>
+	<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="assets/js/app.js"></script>
+	<script>
+		// ── Countdown Timer (target: end of month) ──
+		(function () {
+			const target = new Date('2026-03-31T23:59:59');
+			function pad(n) { return String(n).padStart(2, '0'); }
+			function tick() {
+				const now = new Date();
+				const diff = target - now;
+				if (diff <= 0) {
+					['cd-days', 'cd-hours', 'cd-mins', 'cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
+					return;
+				}
+				document.getElementById('cd-days').textContent = pad(Math.floor(diff / 86400000));
+				document.getElementById('cd-hours').textContent = pad(Math.floor((diff % 86400000) / 3600000));
+				document.getElementById('cd-mins').textContent = pad(Math.floor((diff % 3600000) / 60000));
+				document.getElementById('cd-secs').textContent = pad(Math.floor((diff % 60000) / 1000));
+			}
+			tick();
+			setInterval(tick, 1000);
+		})();
+
+		// ── Clone cards into filtered tabs ──
+		document.addEventListener('DOMContentLoaded', function () {
+			// Course tab — clone first 5 course cards (col-xl-4 cards)
+			const courseCards = document.querySelectorAll('#pane-all .row:nth-of-type(1) .offer-card');
+			const courseTarget = document.getElementById('course-cards-clone');
+			courseCards.forEach(card => {
+				const wrap = document.createElement('div');
+				wrap.className = 'col-12 col-md-6 col-xl-4';
+				wrap.innerHTML = card.parentElement.innerHTML || card.outerHTML;
+				// just clone the col div
+				courseTarget.appendChild(card.closest('.col-12').cloneNode(true));
+			});
+
+			// Referral tab — clone referral cards
+			const refCards = document.querySelectorAll('#pane-all .row:nth-of-type(2) .col-12');
+			const refTarget = document.getElementById('referral-cards-clone');
+			refCards.forEach(col => refTarget.appendChild(col.cloneNode(true)));
+
+			// Placement tab — clone placement cards
+			const plCards = document.querySelectorAll('#pane-all .row:nth-of-type(3) .col-12');
+			const plTarget = document.getElementById('placement-cards-clone');
+			plCards.forEach(col => plTarget.appendChild(col.cloneNode(true)));
+		});
+	</script>
+</body>
+
+</html>
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const leads = document.querySelectorAll('.filter-lead');
+		const pay = document.querySelectorAll('.filter-pay');
+		const offer = document.querySelectorAll('.filter-offer');
+
+		document.querySelector('.notif-clone-target-lead').append(...Array.from(leads).map(e => e.cloneNode(true)));
+		document.querySelector('.notif-clone-target-pay').append(...Array.from(pay).map(e => e.cloneNode(true)));
+		document.querySelector('.notif-clone-target-offer').append(...Array.from(offer).map(e => e.cloneNode(true)));
+	});
+</script>
+<script src="assets/plugins/popper.min.js"></script>
+<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+
+</html>
